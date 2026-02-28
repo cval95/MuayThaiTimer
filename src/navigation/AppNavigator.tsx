@@ -70,7 +70,7 @@ export function AppNavigator() {
           headerStyle: { backgroundColor: '#0A0A0A' },
           headerTintColor: '#FFFFFF',
           headerTitleStyle: { fontWeight: '700' },
-          cardStyle: { backgroundColor: '#0A0A0A' },
+          cardStyle: { backgroundColor: '#0A0A0A', flex: 1 },
         }}
       >
         <Stack.Screen
