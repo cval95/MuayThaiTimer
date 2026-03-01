@@ -14,6 +14,7 @@ import { Category, WorkoutConfig } from '../types';
 import { CATEGORIES } from '../data/categories';
 import { buildRoundPlans } from '../utils/workoutBuilder';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import { COLORS } from '../utils/theme';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'WorkoutSetup'>;
@@ -96,13 +97,13 @@ export function WorkoutSetupScreen({ navigation }: Props) {
               key={cat.id}
               style={[
                 styles.catCard,
-                { borderColor: selected ? cat.color : '#2D2D2D' },
+                { borderColor: selected ? cat.color : COLORS.surfaceAlt },
                 selected && { backgroundColor: cat.bgColor },
               ]}
               onPress={() => toggleCategory(cat.id)}
             >
               <Text style={styles.catEmoji}>{cat.emoji}</Text>
-              <Text style={[styles.catLabel, { color: selected ? cat.color : '#9CA3AF' }]}>
+              <Text style={[styles.catLabel, { color: selected ? cat.color : COLORS.textSecondary }]}>
                 {cat.label}
               </Text>
               <Text style={styles.catDesc}>{cat.description}</Text>
@@ -172,8 +173,8 @@ export function WorkoutSetupScreen({ navigation }: Props) {
         <Switch
           value={autoAssign}
           onValueChange={setAutoAssign}
-          trackColor={{ true: '#EF4444', false: '#2D2D2D' }}
-          thumbColor="#FFFFFF"
+          trackColor={{ true: COLORS.accent, false: COLORS.surfaceAlt }}
+          thumbColor={COLORS.textPrimary}
         />
       </View>
 
@@ -188,10 +189,10 @@ export function WorkoutSetupScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0A0A0A' },
+  container: { flex: 1, backgroundColor: COLORS.background },
   content: { padding: 20, paddingBottom: 60 },
   sectionLabel: {
-    color: '#6B7280',
+    color: COLORS.textMuted,
     fontSize: 11,
     fontWeight: '700',
     letterSpacing: 2,
@@ -208,8 +209,8 @@ const styles = StyleSheet.create({
     width: '47%',
     borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: '#2D2D2D',
-    backgroundColor: '#1C1C1E',
+    borderColor: COLORS.surfaceAlt,
+    backgroundColor: COLORS.surface,
     padding: 12,
     marginBottom: 4,
   },
@@ -217,14 +218,14 @@ const styles = StyleSheet.create({
   catLabel: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#9CA3AF',
+    color: COLORS.textSecondary,
     marginBottom: 2,
   },
-  catDesc: { fontSize: 11, color: '#4B5563' },
+  catDesc: { fontSize: 11, color: COLORS.textDim },
   stepper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 12,
     padding: 4,
     alignSelf: 'flex-start',
@@ -235,11 +236,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    backgroundColor: '#2D2D2D',
+    backgroundColor: COLORS.surfaceAlt,
   },
-  stepBtnText: { color: '#FFFFFF', fontSize: 24, fontWeight: '300' },
+  stepBtnText: { color: COLORS.textPrimary, fontSize: 24, fontWeight: '300' },
   stepValue: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 24,
     fontWeight: '700',
     width: 60,
@@ -247,36 +248,36 @@ const styles = StyleSheet.create({
   },
   pills: { flexDirection: 'row', gap: 8 },
   pill: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 10,
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderWidth: 1,
-    borderColor: '#2D2D2D',
+    borderColor: COLORS.border,
   },
-  pillActive: { backgroundColor: '#7F1D1D', borderColor: '#EF4444' },
-  pillText: { color: '#9CA3AF', fontWeight: '600', fontSize: 14 },
-  pillTextActive: { color: '#FFFFFF' },
+  pillActive: { backgroundColor: COLORS.accentDark, borderColor: COLORS.accent },
+  pillText: { color: COLORS.textSecondary, fontWeight: '600', fontSize: 14 },
+  pillTextActive: { color: COLORS.textPrimary },
   toggleRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 12,
     padding: 16,
     marginTop: 24,
   },
-  toggleLabel: { color: '#FFFFFF', fontWeight: '600', fontSize: 15 },
-  toggleSub: { color: '#6B7280', fontSize: 12, marginTop: 2 },
+  toggleLabel: { color: COLORS.textPrimary, fontWeight: '600', fontSize: 15 },
+  toggleSub: { color: COLORS.textMuted, fontSize: 12, marginTop: 2 },
   startBtn: {
-    backgroundColor: '#EF4444',
+    backgroundColor: COLORS.accent,
     borderRadius: 14,
     padding: 18,
     alignItems: 'center',
     marginTop: 28,
   },
   startBtnText: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 17,
     fontWeight: '800',
     letterSpacing: 2,

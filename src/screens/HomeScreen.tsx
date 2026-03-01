@@ -12,6 +12,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { WorkoutConfig } from '../types';
 import { defaultWorkoutConfig } from '../utils/workoutBuilder';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import { COLORS } from '../utils/theme';
 
 type HomeNavProp = StackNavigationProp<RootStackParamList>;
 
@@ -97,58 +98,58 @@ export function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0A0A0A' },
+  container: { flex: 1, backgroundColor: COLORS.background },
   content: { padding: 20, paddingBottom: 40 },
   header: { alignItems: 'center', marginTop: 20, marginBottom: 32 },
   title: {
-    color: '#EF4444',
+    color: COLORS.accent,
     fontSize: 38,
     fontWeight: '900',
     letterSpacing: 6,
   },
   subtitle: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 28,
     fontWeight: '300',
     letterSpacing: 12,
     marginTop: -6,
   },
   tagline: {
-    color: '#6B7280',
+    color: COLORS.textMuted,
     fontSize: 14,
     marginTop: 8,
     letterSpacing: 1,
   },
   quickStartBtn: {
-    backgroundColor: '#EF4444',
+    backgroundColor: COLORS.accent,
     borderRadius: 14,
     padding: 18,
     alignItems: 'center',
     marginBottom: 12,
   },
   quickStartText: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 18,
     fontWeight: '800',
     letterSpacing: 2,
   },
   newBtn: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 14,
     padding: 16,
     alignItems: 'center',
     marginBottom: 28,
     borderWidth: 1,
-    borderColor: '#2D2D2D',
+    borderColor: COLORS.surfaceAlt,
   },
   newBtnText: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 16,
     fontWeight: '600',
   },
   section: { marginBottom: 24 },
   sectionTitle: {
-    color: '#6B7280',
+    color: COLORS.textMuted,
     fontSize: 12,
     fontWeight: '700',
     letterSpacing: 2,
@@ -156,30 +157,30 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   recentCard: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 12,
     padding: 14,
     marginBottom: 8,
   },
   recentName: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 15,
     fontWeight: '600',
     marginBottom: 3,
   },
   recentMeta: {
-    color: '#6B7280',
+    color: COLORS.textMuted,
     fontSize: 13,
   },
   catalogBtn: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 12,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#2D2D2D',
+    borderColor: COLORS.surfaceAlt,
   },
   catalogBtnText: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 16,
     fontWeight: '600',
   },

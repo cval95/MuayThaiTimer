@@ -13,6 +13,7 @@ import { Combo, Category, Difficulty } from '../types';
 import { COMBOS } from '../data/combos';
 import { CATEGORIES } from '../data/categories';
 import { ComboCard } from '../components/ComboCard';
+import { COLORS } from '../utils/theme';
 
 const DIFFICULTIES: Difficulty[] = ['beginner', 'intermediate', 'advanced'];
 
@@ -48,7 +49,7 @@ export function ComboCatalogScreen() {
         <TextInput
           style={styles.searchInput}
           placeholder="Search combos..."
-          placeholderTextColor="#6B7280"
+          placeholderTextColor={COLORS.textMuted}
           value={search}
           onChangeText={setSearch}
         />
@@ -147,16 +148,16 @@ export function ComboCatalogScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0A0A0A' },
+  container: { flex: 1, backgroundColor: COLORS.background },
   searchRow: { padding: 12, paddingBottom: 0 },
   searchInput: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 10,
     padding: 12,
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 15,
     borderWidth: 1,
-    borderColor: '#2D2D2D',
+    borderColor: COLORS.border,
   },
   filterRow: {
     paddingHorizontal: 12,
@@ -164,15 +165,15 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   chip: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 20,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderWidth: 1,
-    borderColor: '#2D2D2D',
+    borderColor: COLORS.border,
     marginRight: 6,
   },
-  chipText: { color: '#9CA3AF', fontWeight: '600', fontSize: 13 },
+  chipText: { color: COLORS.textSecondary, fontWeight: '600', fontSize: 13 },
   diffRow: {
     flexDirection: 'row',
     paddingHorizontal: 12,
@@ -181,54 +182,54 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   diffChip: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderWidth: 1,
-    borderColor: '#2D2D2D',
+    borderColor: COLORS.border,
   },
-  diffChipActive: { backgroundColor: '#7F1D1D', borderColor: '#EF4444' },
+  diffChipActive: { backgroundColor: COLORS.accentDark, borderColor: COLORS.accent },
   diffChipText: {
-    color: '#9CA3AF',
+    color: COLORS.textSecondary,
     fontSize: 12,
     fontWeight: '600',
     textTransform: 'capitalize',
   },
-  diffChipTextActive: { color: '#FFFFFF' },
-  count: { color: '#4B5563', fontSize: 12, marginLeft: 'auto' },
+  diffChipTextActive: { color: COLORS.textPrimary },
+  count: { color: COLORS.textDim, fontSize: 12, marginLeft: 'auto' },
   list: { padding: 12, paddingBottom: 40 },
   empty: {
-    color: '#6B7280',
+    color: COLORS.textMuted,
     textAlign: 'center',
     padding: 40,
     fontSize: 15,
   },
-  modalContainer: { flex: 1, backgroundColor: '#0A0A0A' },
+  modalContainer: { flex: 1, backgroundColor: COLORS.background },
   modalHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#1C1C1E',
+    borderBottomColor: COLORS.surface,
   },
   modalTitle: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 17,
     fontWeight: '700',
     flex: 1,
   },
-  modalClose: { color: '#6B7280', fontSize: 20, paddingLeft: 12 },
+  modalClose: { color: COLORS.textMuted, fontSize: 20, paddingLeft: 12 },
   modalContent: { padding: 16, paddingBottom: 40 },
   techList: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 12,
     padding: 14,
     marginTop: 8,
   },
   techListTitle: {
-    color: '#6B7280',
+    color: COLORS.textMuted,
     fontSize: 11,
     fontWeight: '700',
     letterSpacing: 2,
@@ -244,11 +245,11 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 8,
-    backgroundColor: '#EF4444',
+    backgroundColor: COLORS.accent,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
   },
-  techCode: { color: '#FFFFFF', fontWeight: '800', fontSize: 13 },
-  techName: { color: '#FFFFFF', fontSize: 15, fontWeight: '500' },
+  techCode: { color: COLORS.textPrimary, fontWeight: '800', fontSize: 13 },
+  techName: { color: COLORS.textPrimary, fontSize: 15, fontWeight: '500' },
 });

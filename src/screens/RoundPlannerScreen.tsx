@@ -17,6 +17,7 @@ import { RoundRow } from '../components/RoundRow';
 import { ComboCard } from '../components/ComboCard';
 import { buildRoundPlans } from '../utils/workoutBuilder';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import { COLORS } from '../utils/theme';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'RoundPlanner'>;
@@ -116,41 +117,41 @@ export function RoundPlannerScreen({ navigation, route }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0A0A0A' },
+  container: { flex: 1, backgroundColor: COLORS.background },
   list: { padding: 16, paddingBottom: 40 },
   hint: {
-    color: '#6B7280',
+    color: COLORS.textMuted,
     fontSize: 13,
     marginBottom: 14,
     textAlign: 'center',
   },
   startBtn: {
-    backgroundColor: '#EF4444',
+    backgroundColor: COLORS.accent,
     borderRadius: 14,
     padding: 18,
     alignItems: 'center',
     marginTop: 12,
   },
   startBtnText: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 17,
     fontWeight: '800',
     letterSpacing: 2,
   },
-  modalContainer: { flex: 1, backgroundColor: '#0A0A0A' },
+  modalContainer: { flex: 1, backgroundColor: COLORS.background },
   modalHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#1C1C1E',
+    borderBottomColor: COLORS.surface,
   },
   modalTitle: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 17,
     fontWeight: '700',
   },
-  modalClose: { color: '#6B7280', fontSize: 20 },
+  modalClose: { color: COLORS.textMuted, fontSize: 20 },
   modalList: { padding: 16, paddingBottom: 40 },
 });

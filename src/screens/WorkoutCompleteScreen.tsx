@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import { COLORS } from '../utils/theme';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'WorkoutComplete'>;
@@ -57,14 +58,14 @@ export function WorkoutCompleteScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
+    backgroundColor: COLORS.background,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 32,
   },
   trophy: { fontSize: 72, marginBottom: 16 },
   title: {
-    color: '#EF4444',
+    color: COLORS.accent,
     fontSize: 28,
     fontWeight: '900',
     letterSpacing: 3,
@@ -72,13 +73,13 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   subtitle: {
-    color: '#9CA3AF',
+    color: COLORS.textSecondary,
     fontSize: 16,
     marginBottom: 40,
   },
   stats: {
     flexDirection: 'row',
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 16,
     padding: 24,
     marginBottom: 40,
@@ -88,18 +89,18 @@ const styles = StyleSheet.create({
   },
   stat: { alignItems: 'center' },
   statValue: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 36,
     fontWeight: '800',
   },
-  statLabel: { color: '#6B7280', fontSize: 13, marginTop: 4 },
+  statLabel: { color: COLORS.textMuted, fontSize: 13, marginTop: 4 },
   statDivider: {
     width: 1,
     height: 48,
-    backgroundColor: '#2D2D2D',
+    backgroundColor: COLORS.surfaceAlt,
   },
   newBtn: {
-    backgroundColor: '#EF4444',
+    backgroundColor: COLORS.accent,
     borderRadius: 14,
     padding: 18,
     alignItems: 'center',
@@ -107,22 +108,22 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   newBtnText: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 17,
     fontWeight: '800',
     letterSpacing: 2,
   },
   setupBtn: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 14,
     padding: 16,
     alignItems: 'center',
     width: '100%',
     borderWidth: 1,
-    borderColor: '#2D2D2D',
+    borderColor: COLORS.border,
   },
   setupBtnText: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 15,
     fontWeight: '600',
   },

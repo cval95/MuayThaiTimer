@@ -13,6 +13,8 @@ import { RouteProp } from '@react-navigation/native';
 import { useWorkout } from '../hooks/useWorkout';
 import { TimerRing } from '../components/TimerRing';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import { loadSounds, unloadSounds, playBellStart, playBellEnd, playBeep } from '../utils/audio';
+import { COLORS } from '../utils/theme';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ActiveWorkout'>;
@@ -20,10 +22,10 @@ type Props = {
 };
 
 const PHASE_COLORS: Record<string, string> = {
-  prep: '#F59E0B',
-  round: '#EF4444',
-  rest: '#3B82F6',
-  complete: '#22C55E',
+  prep: COLORS.phasePrep,
+  round: COLORS.phaseRound,
+  rest: COLORS.phaseRest,
+  complete: COLORS.phaseComplete,
 };
 
 export function ActiveWorkoutScreen({ navigation, route }: Props) {
@@ -31,6 +33,12 @@ export function ActiveWorkoutScreen({ navigation, route }: Props) {
   const workout = useWorkout(config);
   const [started, setStarted] = useState(false);
   const prevPhaseRef = useRef(workout.phase);
+
+  // Load sounds on mount, unload on unmount
+  useEffect(() => {
+    loadSounds();
+    return () => { unloadSounds(); };
+  }, []);
 
   // Auto-start when screen mounts
   useEffect(() => {
@@ -40,18 +48,27 @@ export function ActiveWorkoutScreen({ navigation, route }: Props) {
     }
   }, []);
 
-  // Vibrate on phase transitions
+  // Bell + vibration on phase transitions
   useEffect(() => {
     if (prevPhaseRef.current === workout.phase) return;
     prevPhaseRef.current = workout.phase;
     if (workout.phase === 'round') {
-      // Double buzz = round start bell
+      playBellStart();
       Vibration.vibrate([0, 100, 80, 100]);
     } else if (workout.phase === 'rest') {
-      // Single long buzz = round end bell
+      playBellEnd();
       Vibration.vibrate(300);
     }
   }, [workout.phase]);
+
+  // 3-2-1 countdown beeps before each phase ends
+  useEffect(() => {
+    if (workout.phase !== 'round' && workout.phase !== 'rest' && workout.phase !== 'prep') return;
+    if (workout.remaining >= 1 && workout.remaining <= 3) {
+      playBeep();
+      Vibration.vibrate(40);
+    }
+  }, [workout.remaining]);
 
   // Navigate to complete screen when done
   useEffect(() => {
@@ -186,7 +203,7 @@ export function ActiveWorkoutScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
+    backgroundColor: COLORS.background,
     alignItems: 'center',
   },
   phaseBanner: {
@@ -211,14 +228,14 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   comboName: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 22,
     fontWeight: '700',
     textAlign: 'center',
     marginBottom: 10,
   },
   comboTechniques: {
-    color: '#EF4444',
+    color: COLORS.accent,
     fontSize: 16,
     fontWeight: '600',
     textAlign: 'center',
@@ -226,7 +243,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   cue: {
-    color: '#6B7280',
+    color: COLORS.textMuted,
     fontSize: 13,
     fontStyle: 'italic',
     textAlign: 'center',
@@ -234,12 +251,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   upNext: {
-    color: '#9CA3AF',
+    color: COLORS.textSecondary,
     fontSize: 15,
     textAlign: 'center',
   },
   nextRoundPreview: {
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 12,
     padding: 14,
     alignItems: 'center',
@@ -247,20 +264,20 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   nextRoundLabel: {
-    color: '#6B7280',
+    color: COLORS.textMuted,
     fontSize: 11,
     fontWeight: '700',
     letterSpacing: 2,
     marginBottom: 4,
   },
   nextRoundName: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 17,
     fontWeight: '700',
     marginBottom: 4,
   },
   nextRoundTech: {
-    color: '#3B82F6',
+    color: COLORS.phaseRest,
     fontSize: 13,
   },
   controls: {
@@ -272,13 +289,13 @@ const styles = StyleSheet.create({
   },
   stopBtn: {
     flex: 1,
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 12,
     padding: 14,
     alignItems: 'center',
   },
   stopBtnText: {
-    color: '#6B7280',
+    color: COLORS.textMuted,
     fontWeight: '700',
     fontSize: 13,
     letterSpacing: 1,
@@ -289,7 +306,7 @@ const styles = StyleSheet.create({
     padding: 14,
     alignItems: 'center',
     borderWidth: 1.5,
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
   },
   pauseBtnText: {
     fontWeight: '800',
@@ -298,13 +315,13 @@ const styles = StyleSheet.create({
   },
   skipBtn: {
     flex: 1,
-    backgroundColor: '#1C1C1E',
+    backgroundColor: COLORS.surface,
     borderRadius: 12,
     padding: 14,
     alignItems: 'center',
   },
   skipBtnText: {
-    color: '#6B7280',
+    color: COLORS.textMuted,
     fontWeight: '700',
     fontSize: 13,
     letterSpacing: 1,
