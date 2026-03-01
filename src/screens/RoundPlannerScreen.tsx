@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { Combo, RoundPlan, WorkoutConfig } from '../types';
@@ -18,15 +17,15 @@ import { ComboCard } from '../components/ComboCard';
 import { buildRoundPlans } from '../utils/workoutBuilder';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { COLORS } from '../utils/theme';
+import { useWorkoutSync } from '../hooks/useWorkoutSync';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'RoundPlanner'>;
   route: RouteProp<RootStackParamList, 'RoundPlanner'>;
 };
 
-const SAVED_KEY = 'savedWorkouts';
-
 export function RoundPlannerScreen({ navigation, route }: Props) {
+  const { saveWorkout } = useWorkoutSync();
   const incoming = route.params.config;
   const [roundPlans, setRoundPlans] = useState<RoundPlan[]>(() => {
     if (incoming.roundPlans.length === incoming.roundCount) return incoming.roundPlans;
@@ -54,14 +53,7 @@ export function RoundPlannerScreen({ navigation, route }: Props) {
       roundPlans,
       autoAssign: false,
     };
-    try {
-      const raw = await AsyncStorage.getItem(SAVED_KEY);
-      const saved: WorkoutConfig[] = raw ? JSON.parse(raw) : [];
-      await AsyncStorage.setItem(
-        SAVED_KEY,
-        JSON.stringify([config, ...saved].slice(0, 10))
-      );
-    } catch (_) {}
+    try { await saveWorkout(config); } catch (_) {}
     navigation.navigate('ActiveWorkout', { config });
   };
 

@@ -10,6 +10,8 @@ import { RoundPlannerScreen } from '../screens/RoundPlannerScreen';
 import { ActiveWorkoutScreen } from '../screens/ActiveWorkoutScreen';
 import { WorkoutCompleteScreen } from '../screens/WorkoutCompleteScreen';
 import { ComboCatalogScreen } from '../screens/ComboCatalogScreen';
+import LoginScreen from '../screens/auth/LoginScreen';
+import SignUpScreen from '../screens/auth/SignUpScreen';
 import { WorkoutConfig } from '../types';
 
 export type RootStackParamList = {
@@ -18,6 +20,8 @@ export type RootStackParamList = {
   RoundPlanner: { config: WorkoutConfig };
   ActiveWorkout: { config: WorkoutConfig };
   WorkoutComplete: { totalRounds: number; totalTime: number };
+  Login: undefined;
+  SignUp: undefined;
 };
 
 export type TabParamList = {
@@ -97,6 +101,16 @@ export function AppNavigator() {
           name="WorkoutComplete"
           component={WorkoutCompleteScreen}
           options={{ headerShown: false, gestureEnabled: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false, presentation: 'modal' }}
+        />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUpScreen}
+          options={{ headerShown: false, presentation: 'modal' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
