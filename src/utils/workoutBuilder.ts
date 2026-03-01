@@ -13,6 +13,12 @@ export function buildRoundPlans(config: WorkoutConfig): RoundPlan[] {
       )
     : COMBOS;
 
+  // Filter by focus — fall back to full pool if no combos match
+  if (config.selectedFocus) {
+    const focused = pool.filter((c) => c.focuses?.includes(config.selectedFocus!));
+    if (focused.length > 0) pool = focused;
+  }
+
   // Sort by difficulty ascending
   pool = [...pool].sort(
     (a, b) => DIFFICULTY_ORDER[a.difficulty] - DIFFICULTY_ORDER[b.difficulty]

@@ -10,8 +10,9 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Category, WorkoutConfig } from '../types';
+import { Category, Focus, WorkoutConfig } from '../types';
 import { CATEGORIES } from '../data/categories';
+import { FOCUSES } from '../data/focuses';
 import { buildRoundPlans } from '../utils/workoutBuilder';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { COLORS } from '../utils/theme';
@@ -36,6 +37,7 @@ export function WorkoutSetupScreen({ navigation }: Props) {
   const [roundCount, setRoundCount] = useState(5);
   const [roundDuration, setRoundDuration] = useState(180);
   const [restDuration, setRestDuration] = useState(60);
+  const [selectedFocus, setSelectedFocus] = useState<Focus | undefined>(undefined);
   const [autoAssign, setAutoAssign] = useState(true);
 
   const toggleCategory = (cat: Category) => {
@@ -45,14 +47,19 @@ export function WorkoutSetupScreen({ navigation }: Props) {
   };
 
   const buildConfig = (): WorkoutConfig => {
+    const focusLabel = selectedFocus ? FOCUSES.find((f) => f.id === selectedFocus)?.label : null;
+    const name = focusLabel
+      ? `${roundCount}R · ${fmt(roundDuration)} · ${focusLabel}`
+      : `${roundCount}R · ${fmt(roundDuration)} · ${selectedCategories.join(', ')}`;
     const config: WorkoutConfig = {
       id: Date.now().toString(),
-      name: `${roundCount}R · ${fmt(roundDuration)} · ${selectedCategories.join(', ')}`,
+      name,
       roundCount,
       roundDuration,
       restDuration,
       prepDuration: 10,
-      selectedCategories,
+      selectedCategories: selectedFocus ? [] : selectedCategories,
+      selectedFocus,
       roundPlans: [],
       autoAssign,
     };
@@ -73,8 +80,8 @@ export function WorkoutSetupScreen({ navigation }: Props) {
   };
 
   const handleStart = () => {
-    if (selectedCategories.length === 0) {
-      Alert.alert('Select at least one focus area');
+    if (!selectedFocus && selectedCategories.length === 0) {
+      Alert.alert('Pick a focus or select at least one category');
       return;
     }
     const config = buildConfig();
@@ -85,13 +92,41 @@ export function WorkoutSetupScreen({ navigation }: Props) {
     }
   };
 
+  const focusActive = selectedFocus !== undefined;
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {/* Focus Areas */}
-      <Text style={styles.sectionLabel}>FOCUS AREAS</Text>
-      <View style={styles.categoryGrid}>
+
+      {/* Training Focus */}
+      <Text style={styles.sectionLabel}>TRAINING FOCUS</Text>
+      <View style={styles.focusGrid}>
+        {FOCUSES.map((f) => {
+          const active = selectedFocus === f.id;
+          return (
+            <TouchableOpacity
+              key={f.id}
+              style={[styles.focusCard, active && styles.focusCardActive]}
+              onPress={() => setSelectedFocus(active ? undefined : f.id)}
+            >
+              <Text style={styles.focusEmoji}>{f.emoji}</Text>
+              <Text style={[styles.focusLabel, active && styles.focusLabelActive]}>{f.label}</Text>
+              <Text style={styles.focusDesc}>{f.description}</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+
+      {/* Divider */}
+      <View style={styles.dividerRow}>
+        <View style={styles.dividerLine} />
+        <Text style={styles.dividerText}>{focusActive ? 'or also narrow by' : 'or pick by category'}</Text>
+        <View style={styles.dividerLine} />
+      </View>
+
+      {/* Categories */}
+      <View style={[styles.categoryGrid, focusActive && styles.dimmed]}>
         {CATEGORIES.map((cat) => {
-          const selected = selectedCategories.includes(cat.id);
+          const selected = !focusActive && selectedCategories.includes(cat.id);
           return (
             <TouchableOpacity
               key={cat.id}
@@ -100,7 +135,10 @@ export function WorkoutSetupScreen({ navigation }: Props) {
                 { borderColor: selected ? cat.color : COLORS.surfaceAlt },
                 selected && { backgroundColor: cat.bgColor },
               ]}
-              onPress={() => toggleCategory(cat.id)}
+              onPress={() => {
+                if (focusActive) setSelectedFocus(undefined);
+                toggleCategory(cat.id);
+              }}
             >
               <Text style={styles.catEmoji}>{cat.emoji}</Text>
               <Text style={[styles.catLabel, { color: selected ? cat.color : COLORS.textSecondary }]}>
@@ -200,6 +238,43 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 10,
   },
+  focusGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  focusCard: {
+    width: '47%',
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: COLORS.surfaceAlt,
+    backgroundColor: COLORS.surface,
+    padding: 14,
+    marginBottom: 4,
+  },
+  focusCardActive: {
+    borderColor: COLORS.accent,
+    backgroundColor: COLORS.accentDark,
+  },
+  focusEmoji: { fontSize: 24, marginBottom: 6 },
+  focusLabel: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: COLORS.textSecondary,
+    marginBottom: 2,
+  },
+  focusLabelActive: { color: COLORS.textPrimary },
+  focusDesc: { fontSize: 11, color: COLORS.textDim },
+  dividerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+    gap: 8,
+  },
+  dividerLine: { flex: 1, height: 1, backgroundColor: COLORS.border },
+  dividerText: { color: COLORS.textDim, fontSize: 11, fontWeight: '600' },
+  dimmed: { opacity: 0.35 },
   categoryGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',

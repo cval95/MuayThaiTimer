@@ -14,6 +14,7 @@ import { useWorkout } from '../hooks/useWorkout';
 import { TimerRing } from '../components/TimerRing';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { loadSounds, unloadSounds, playBellStart, playBellEnd, playBeep } from '../utils/audio';
+import { getFocusInfo } from '../data/focuses';
 import { COLORS } from '../utils/theme';
 
 type Props = {
@@ -119,6 +120,9 @@ export function ActiveWorkoutScreen({ navigation, route }: Props) {
       <View style={[styles.phaseBanner, { backgroundColor: phaseColor + '22' }]}>
         <Text style={[styles.phaseText, { color: phaseColor }]}>{phaseBanner}</Text>
       </View>
+      {config.selectedFocus ? (
+        <Text style={styles.focusNote}>{getFocusInfo(config.selectedFocus).contextNote}</Text>
+      ) : null}
 
       {/* Timer Ring */}
       <View style={styles.timerSection}>
@@ -216,6 +220,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '800',
     letterSpacing: 3,
+  },
+  focusNote: {
+    color: COLORS.textMuted,
+    fontSize: 12,
+    fontStyle: 'italic',
+    marginTop: 6,
+    textAlign: 'center',
+    paddingHorizontal: 24,
   },
   timerSection: {
     marginTop: 24,

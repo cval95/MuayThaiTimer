@@ -9,6 +9,8 @@ export type Category =
 
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
 
+export type Focus = 'straights' | 'lead-side' | 'southpaw' | 'power';
+
 export interface Technique {
   name: string;
   shortCode: string;
@@ -20,6 +22,7 @@ export interface Combo {
   techniques: Technique[];
   categories: Category[];
   difficulty: Difficulty;
+  focuses?: Focus[];
   coachingCue?: string;
 }
 
@@ -37,6 +40,7 @@ export interface WorkoutConfig {
   restDuration: number;
   prepDuration: number;
   selectedCategories: Category[];
+  selectedFocus?: Focus;
   roundPlans: RoundPlan[];
   autoAssign: boolean;
 }

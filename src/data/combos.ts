@@ -8,6 +8,7 @@ export const COMBOS: Combo[] = [
     techniques: [{ name: 'Jab', shortCode: '1' }],
     categories: ['boxing'],
     difficulty: 'beginner',
+    focuses: ['straights', 'lead-side'],
     coachingCue: 'Snap it out and bring it straight back. Keep your chin down.',
   },
   {
@@ -16,6 +17,7 @@ export const COMBOS: Combo[] = [
     techniques: [{ name: 'Cross', shortCode: '2' }],
     categories: ['boxing'],
     difficulty: 'beginner',
+    focuses: ['straights', 'southpaw', 'power'],
     coachingCue: 'Rotate your hip and shoulder into it. Drive off the back foot.',
   },
   {
@@ -27,6 +29,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['boxing'],
     difficulty: 'beginner',
+    focuses: ['straights', 'southpaw', 'power'],
     coachingCue: 'Sharp jab to set up the cross. Stay relaxed between punches.',
   },
   {
@@ -39,6 +42,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['boxing'],
     difficulty: 'beginner',
+    focuses: ['lead-side', 'southpaw', 'power'],
     coachingCue: 'Classic 1-2-3. Pivot on the hook and stay tight.',
   },
   {
@@ -52,6 +56,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['boxing'],
     difficulty: 'intermediate',
+    focuses: ['southpaw', 'power'],
     coachingCue: 'Don\'t telegraph the last cross. Let the hook open the door.',
   },
   {
@@ -64,6 +69,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['boxing'],
     difficulty: 'beginner',
+    focuses: ['straights', 'lead-side'],
     coachingCue: 'First jab to the body, second to the head, then cross.',
   },
   {
@@ -75,6 +81,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['boxing'],
     difficulty: 'beginner',
+    focuses: ['lead-side', 'southpaw', 'power'],
     coachingCue: 'Lead hook to distract, follow with the cross to land clean.',
   },
   {
@@ -87,6 +94,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['boxing'],
     difficulty: 'intermediate',
+    focuses: ['southpaw', 'power'],
     coachingCue: 'Stay balanced. The final cross is your power shot.',
   },
   {
@@ -98,6 +106,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['boxing'],
     difficulty: 'intermediate',
+    focuses: ['straights'],
     coachingCue: 'Bend the knees on the body jab. Snap back up for the cross.',
   },
   {
@@ -109,6 +118,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['boxing'],
     difficulty: 'intermediate',
+    focuses: ['lead-side', 'power'],
     coachingCue: 'Dip to generate power on the uppercut. Flow into the hook.',
   },
   {
@@ -122,6 +132,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['boxing'],
     difficulty: 'advanced',
+    focuses: ['power'],
     coachingCue: 'Maintain rhythm. Each punch flows into the next.',
   },
   {
@@ -134,6 +145,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['boxing'],
     difficulty: 'advanced',
+    focuses: ['power'],
     coachingCue: 'Classic inside fighting combo. Great for close range.',
   },
 
@@ -144,6 +156,7 @@ export const COMBOS: Combo[] = [
     techniques: [{ name: 'Teep', shortCode: 'T' }],
     categories: ['kicks'],
     difficulty: 'beginner',
+    focuses: ['lead-side'],
     coachingCue: 'Drive the ball of the foot through. Extend your hip fully.',
   },
   {
@@ -160,6 +173,7 @@ export const COMBOS: Combo[] = [
     techniques: [{ name: 'Body Roundhouse', shortCode: 'BRK' }],
     categories: ['kicks'],
     difficulty: 'beginner',
+    focuses: ['power'],
     coachingCue: 'Pull the arm back and whip the kick through.',
   },
   {
@@ -168,6 +182,7 @@ export const COMBOS: Combo[] = [
     techniques: [{ name: 'Head Roundhouse', shortCode: 'HK' }],
     categories: ['kicks'],
     difficulty: 'intermediate',
+    focuses: ['power'],
     coachingCue: 'Disguise with shoulder level. Keep it fast and snappy.',
   },
   {
@@ -187,6 +202,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['kicks', 'boxing'],
     difficulty: 'beginner',
+    focuses: ['lead-side'],
     coachingCue: 'Use the jab to close distance, then push them away with the teep.',
   },
   {
@@ -199,6 +215,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['kicks', 'combinations'],
     difficulty: 'intermediate',
+    focuses: ['power'],
     coachingCue: 'Classic Muay Thai combo. Pivot off the cross into the kick.',
   },
   {
@@ -210,6 +227,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['kicks', 'boxing'],
     difficulty: 'beginner',
+    focuses: ['southpaw'],
     coachingCue: 'Throw the cross to the head, then cut down with the low kick.',
   },
   {
@@ -221,6 +239,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['kicks', 'combinations'],
     difficulty: 'intermediate',
+    focuses: ['power'],
     coachingCue: 'The hook draws the guard up. Kick the exposed body.',
   },
   {
@@ -277,6 +296,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['elbows', 'boxing'],
     difficulty: 'intermediate',
+    focuses: ['lead-side'],
     coachingCue: 'Jab to get inside, elbow as you step in close.',
   },
   {
@@ -288,6 +308,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['elbows', 'boxing'],
     difficulty: 'intermediate',
+    focuses: ['southpaw'],
     coachingCue: 'Cross forces the guard up, slip inside and elbow.',
   },
   {
@@ -300,6 +321,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['elbows', 'combinations'],
     difficulty: 'intermediate',
+    focuses: ['lead-side'],
     coachingCue: 'Use the 1-2 to close distance and land the finishing elbow.',
   },
   {
@@ -337,6 +359,7 @@ export const COMBOS: Combo[] = [
     techniques: [{ name: 'Flying Knee', shortCode: 'FK' }],
     categories: ['knees'],
     difficulty: 'advanced',
+    focuses: ['power'],
     coachingCue: 'Explosive leap. Lead with the knee like an arrow.',
   },
   {
@@ -371,6 +394,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['knees', 'combinations'],
     difficulty: 'intermediate',
+    focuses: ['power'],
     coachingCue: 'Punches to close the gap, then clinch and knee.',
   },
   {
@@ -383,6 +407,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['knees', 'clinch'],
     difficulty: 'advanced',
+    focuses: ['power'],
     coachingCue: 'Rapid fire knees in the plum. Keep good posture.',
   },
 
@@ -405,6 +430,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['clinch', 'knees'],
     difficulty: 'intermediate',
+    focuses: ['power'],
     coachingCue: 'Control the head from plum, alternate knees to the body.',
   },
   {
@@ -457,6 +483,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['defense'],
     difficulty: 'intermediate',
+    focuses: ['straights', 'southpaw'],
     coachingCue: 'Slip outside the jab, shoulder dip, fire the cross back.',
   },
   {
@@ -468,6 +495,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['defense'],
     difficulty: 'intermediate',
+    focuses: ['southpaw'],
     coachingCue: 'Dip under the punch and come up with the hook.',
   },
   {
@@ -479,6 +507,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['defense', 'kicks'],
     difficulty: 'intermediate',
+    focuses: ['southpaw'],
     coachingCue: 'Lift the knee to check, immediately counter with a low kick.',
   },
   {
@@ -501,6 +530,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['defense'],
     difficulty: 'beginner',
+    focuses: ['straights', 'lead-side'],
     coachingCue: 'Redirect their jab with a light parry, counter immediately.',
   },
   {
@@ -512,6 +542,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['defense'],
     difficulty: 'intermediate',
+    focuses: ['southpaw'],
     coachingCue: 'Elbow down to absorb the kick. Counter before they reset.',
   },
 
@@ -526,6 +557,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['combinations', 'boxing', 'kicks'],
     difficulty: 'beginner',
+    focuses: ['southpaw', 'power'],
     coachingCue: 'Keep the hands going to set up the leg kick.',
   },
   {
@@ -539,6 +571,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['combinations'],
     difficulty: 'intermediate',
+    focuses: ['southpaw', 'power'],
     coachingCue: 'Three punches to force a reaction, then kick the open body.',
   },
   {
@@ -551,6 +584,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['combinations', 'kicks', 'boxing'],
     difficulty: 'intermediate',
+    focuses: ['lead-side'],
     coachingCue: 'Create space with the teep, then immediately follow with punches.',
   },
   {
@@ -564,6 +598,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['combinations'],
     difficulty: 'intermediate',
+    focuses: ['power'],
     coachingCue: 'Cut the leg first to compromise their base, then punch.',
   },
   {
@@ -577,6 +612,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['combinations', 'knees', 'elbows', 'clinch'],
     difficulty: 'advanced',
+    focuses: ['power'],
     coachingCue: 'Jab to close distance, clinch, knee then elbow on the way out.',
   },
   {
@@ -590,6 +626,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['combinations'],
     difficulty: 'advanced',
+    focuses: ['southpaw', 'power'],
     coachingCue: 'Build low to high. Head kick lands when they lower their guard.',
   },
   {
@@ -601,6 +638,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['combinations', 'boxing', 'kicks'],
     difficulty: 'advanced',
+    focuses: ['power'],
     coachingCue: 'Fake the kick, leap and punch, land and immediately kick.',
   },
   {
@@ -609,6 +647,7 @@ export const COMBOS: Combo[] = [
     techniques: [{ name: 'Spinning Back Kick', shortCode: 'SBK' }],
     categories: ['combinations', 'kicks'],
     difficulty: 'advanced',
+    focuses: ['power'],
     coachingCue: 'Turn fast, look over your shoulder, drive the heel back.',
   },
   {
@@ -622,6 +661,7 @@ export const COMBOS: Combo[] = [
     ],
     categories: ['combinations'],
     difficulty: 'advanced',
+    focuses: ['southpaw', 'power'],
     coachingCue: 'All four weapons in one flowing combo. Stay aggressive.',
   },
 ];
