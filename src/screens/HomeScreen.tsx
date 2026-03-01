@@ -34,44 +34,28 @@ export function HomeScreen() {
     loadRecent();
   }, [loadRecent]);
 
-  // Reload when screen gains focus or auth state changes
   useEffect(() => {
     return navigation.addListener('focus', loadRecent);
   }, [navigation, loadRecent]);
-
-  useEffect(() => {
-    loadRecent();
-  }, [user]);
 
   const quickStart = () => {
     const config = recent.length > 0 ? recent[0] : defaultWorkoutConfig();
     navigation.navigate('ActiveWorkout', { config });
   };
 
-  const initials = user?.email ? user.email[0].toUpperCase() : null;
+  const initials = user?.email ? user.email[0].toUpperCase() : '?';
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {/* Auth header */}
-      <View style={styles.authRow}>
-        {user ? (
-          <View style={styles.authRowInner}>
-            <View style={styles.avatar}>
-              <Text style={styles.avatarText}>{initials}</Text>
-            </View>
-            <Text style={styles.authEmail} numberOfLines={1}>{user.email}</Text>
-            <TouchableOpacity onPress={signOut} style={styles.signOutBtn}>
-              <Text style={styles.signOutText}>Sign Out</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <TouchableOpacity
-            style={styles.signInLink}
-            onPress={() => navigation.navigate('Login')}
-          >
-            <Text style={styles.signInLinkText}>Sign In / Create Account</Text>
-          </TouchableOpacity>
-        )}
+      {/* Account row — user is always authenticated here */}
+      <View style={styles.accountRow}>
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText}>{initials}</Text>
+        </View>
+        <Text style={styles.accountEmail} numberOfLines={1}>{user?.email}</Text>
+        <TouchableOpacity onPress={signOut} style={styles.signOutBtn}>
+          <Text style={styles.signOutText}>Sign Out</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Header */}
@@ -93,18 +77,6 @@ export function HomeScreen() {
       >
         <Text style={styles.newBtnText}>+ New Workout</Text>
       </TouchableOpacity>
-
-      {/* Save history nudge — shown only when not signed in */}
-      {!user && (
-        <TouchableOpacity
-          style={styles.nudgeBanner}
-          onPress={() => navigation.navigate('SignUp')}
-        >
-          <Text style={styles.nudgeText}>
-            📲  Sign up free to save your workout history across devices
-          </Text>
-        </TouchableOpacity>
-      )}
 
       {/* Recent Workouts */}
       {recent.length > 0 && (
@@ -141,15 +113,11 @@ export function HomeScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.background },
   content: { padding: 20, paddingBottom: 40 },
-  authRow: {
-    marginBottom: SPACING.md,
-    minHeight: 36,
-    justifyContent: 'center',
-  },
-  authRowInner: {
+  accountRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: SPACING.sm,
+    marginBottom: SPACING.md,
   },
   avatar: {
     width: 32,
@@ -164,7 +132,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
   },
-  authEmail: {
+  accountEmail: {
     flex: 1,
     color: COLORS.textSecondary,
     fontSize: 13,
@@ -179,27 +147,6 @@ const styles = StyleSheet.create({
   signOutText: {
     color: COLORS.textMuted,
     fontSize: 12,
-  },
-  signInLink: {
-    alignSelf: 'flex-end',
-  },
-  signInLinkText: {
-    color: COLORS.accent,
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  nudgeBanner: {
-    backgroundColor: COLORS.surface,
-    borderRadius: 12,
-    padding: SPACING.md,
-    marginBottom: SPACING.lg,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-  },
-  nudgeText: {
-    color: COLORS.textSecondary,
-    fontSize: 14,
-    lineHeight: 20,
   },
   header: { alignItems: 'center', marginTop: 20, marginBottom: 32 },
   title: {

@@ -12,9 +12,12 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cormacvalentine.muaythaitimer",
+      "usesAppleSignIn": true
     },
     "android": {
+      "package": "com.cormacvalentine.muaythaitimer",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -28,7 +31,8 @@
     },
     "plugins": [
       "expo-web-browser",
-      "expo-secure-store"
+      "expo-secure-store",
+      "react-native-purchases"
     ]
   }
 }
