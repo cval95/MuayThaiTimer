@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Category, Focus, WorkoutConfig } from '../types';
 import { CATEGORIES } from '../data/categories';
@@ -16,6 +15,7 @@ import { FOCUSES } from '../data/focuses';
 import { buildRoundPlans } from '../utils/workoutBuilder';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { COLORS } from '../utils/theme';
+import { useWorkoutSync } from '../hooks/useWorkoutSync';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'WorkoutSetup'>;
@@ -23,7 +23,6 @@ type Props = {
 
 const ROUND_DURATIONS = [60, 120, 180, 300];
 const REST_DURATIONS = [30, 60, 120];
-const SAVED_KEY = 'savedWorkouts';
 
 function fmt(seconds: number) {
   if (seconds < 60) return `${seconds}s`;
@@ -31,6 +30,7 @@ function fmt(seconds: number) {
 }
 
 export function WorkoutSetupScreen({ navigation }: Props) {
+  const { saveWorkout } = useWorkoutSync();
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([
     'boxing', 'kicks', 'combinations',
   ]);
@@ -70,12 +70,7 @@ export function WorkoutSetupScreen({ navigation }: Props) {
   };
 
   const saveAndStart = async (config: WorkoutConfig) => {
-    try {
-      const raw = await AsyncStorage.getItem(SAVED_KEY);
-      const saved: WorkoutConfig[] = raw ? JSON.parse(raw) : [];
-      const updated = [config, ...saved].slice(0, 10);
-      await AsyncStorage.setItem(SAVED_KEY, JSON.stringify(updated));
-    } catch (_) {}
+    try { await saveWorkout(config); } catch (_) {}
     navigation.navigate('ActiveWorkout', { config });
   };
 
