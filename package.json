@@ -34,7 +34,9 @@
   },
   "devDependencies": {
     "@types/react": "~19.1.10",
+    "@types/react-native": "^0.73.0",
     "typescript": "~5.9.2"
   },
-  "private": true
+  "private": true,
+  "packageManager": "yarn@4.12.0"
 }
