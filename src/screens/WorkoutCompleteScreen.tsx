@@ -3,8 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/AppNavigator';
-import { COLORS, SPACING } from '../utils/theme';
-import { useAuth } from '../context/AuthContext';
+import { COLORS } from '../utils/theme';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'WorkoutComplete'>;
@@ -12,7 +11,6 @@ type Props = {
 };
 
 export function WorkoutCompleteScreen({ navigation, route }: Props) {
-  const { user } = useAuth();
   const { totalRounds, totalTime } = route.params;
   const minutes = Math.floor(totalTime / 60);
   const seconds = totalTime % 60;
@@ -36,17 +34,6 @@ export function WorkoutCompleteScreen({ navigation, route }: Props) {
           <Text style={styles.statLabel}>Round Time</Text>
         </View>
       </View>
-
-      {!user && (
-        <TouchableOpacity
-          style={styles.nudgeBanner}
-          onPress={() => navigation.navigate('SignUp')}
-        >
-          <Text style={styles.nudgeText}>
-            Sign up free to save your history across devices →
-          </Text>
-        </TouchableOpacity>
-      )}
 
       <TouchableOpacity
         style={styles.newBtn}
@@ -139,20 +126,5 @@ const styles = StyleSheet.create({
     color: COLORS.textPrimary,
     fontSize: 15,
     fontWeight: '600',
-  },
-  nudgeBanner: {
-    backgroundColor: COLORS.surface,
-    borderRadius: 12,
-    padding: SPACING.md,
-    marginBottom: SPACING.md,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    width: '100%',
-  },
-  nudgeText: {
-    color: COLORS.accent,
-    fontSize: 14,
-    fontWeight: '600',
-    textAlign: 'center',
   },
 });

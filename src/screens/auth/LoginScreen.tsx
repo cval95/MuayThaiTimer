@@ -91,6 +91,13 @@ export default function LoginScreen({ navigation }: Props) {
           />
 
           <TouchableOpacity
+            style={styles.forgotLink}
+            onPress={() => navigation.navigate('ForgotPassword')}
+          >
+            <Text style={styles.forgotText}>Forgot password?</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
             style={[styles.primaryBtn, loading && styles.btnDisabled]}
             onPress={handleEmailSignIn}
             disabled={loading}
@@ -239,5 +246,14 @@ const styles = StyleSheet.create({
   switchAccent: {
     color: COLORS.accent,
     fontWeight: '600',
+  },
+  forgotLink: {
+    alignSelf: 'flex-end',
+    marginBottom: SPACING.md,
+    marginTop: -SPACING.xs,
+  },
+  forgotText: {
+    color: COLORS.accent,
+    fontSize: 13,
   },
 });
