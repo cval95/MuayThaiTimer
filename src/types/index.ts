@@ -43,6 +43,7 @@ export interface WorkoutConfig {
   selectedFocus?: Focus;
   roundPlans: RoundPlan[];
   autoAssign: boolean;
+  completedAt?: string; // ISO timestamp set when workout is finished
 }
 
 export type WorkoutPhase = 'idle' | 'prep' | 'round' | 'rest' | 'complete';
