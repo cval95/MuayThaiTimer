@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { COLORS } from '../utils/theme';
+import { useWorkoutSync } from '../hooks/useWorkoutSync';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'WorkoutComplete'>;
@@ -11,9 +12,14 @@ type Props = {
 };
 
 export function WorkoutCompleteScreen({ navigation, route }: Props) {
-  const { totalRounds, totalTime } = route.params;
+  const { totalRounds, totalTime, config } = route.params;
+  const { saveWorkout } = useWorkoutSync();
   const minutes = Math.floor(totalTime / 60);
   const seconds = totalTime % 60;
+
+  useEffect(() => {
+    saveWorkout({ ...config, completedAt: new Date().toISOString() }).catch(() => {});
+  }, []);
 
   return (
     <View style={styles.container}>

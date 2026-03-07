@@ -59,6 +59,7 @@ export function ComboCatalogScreen() {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
+        style={styles.filterScroll}
         contentContainerStyle={styles.filterRow}
       >
         {CATEGORIES.map((cat) => {
@@ -159,19 +160,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.border,
   },
+  filterScroll: {
+    height: 52,
+    flexGrow: 0,
+    flexShrink: 0,
+  },
   filterRow: {
     paddingHorizontal: 12,
     paddingVertical: 10,
-    gap: 8,
+    alignItems: 'center',
   },
   chip: {
     backgroundColor: COLORS.surface,
     borderRadius: 20,
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingVertical: 7,
     borderWidth: 1,
     borderColor: COLORS.border,
-    marginRight: 6,
+    marginRight: 8,
   },
   chipText: { color: COLORS.textSecondary, fontWeight: '600', fontSize: 13 },
   diffRow: {

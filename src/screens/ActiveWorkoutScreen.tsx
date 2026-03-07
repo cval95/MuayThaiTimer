@@ -77,6 +77,7 @@ export function ActiveWorkoutScreen({ navigation, route }: Props) {
       navigation.replace('WorkoutComplete', {
         totalRounds: config.roundCount,
         totalTime: config.roundCount * config.roundDuration,
+        config,
       });
     }
   }, [workout.phase]);

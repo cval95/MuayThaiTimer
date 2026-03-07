@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { HomeScreen } from '../screens/HomeScreen';
 import { WorkoutSetupScreen } from '../screens/WorkoutSetupScreen';
@@ -16,12 +17,14 @@ import SignUpScreen from '../screens/auth/SignUpScreen';
 import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
 import PaywallScreen from '../screens/PaywallScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import OnboardingScreen, { ONBOARDING_KEY } from '../screens/OnboardingScreen';
 import { WorkoutConfig } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { useSubscription } from '../context/SubscriptionContext';
 
 export type RootStackParamList = {
   // Auth flow
+  Onboarding: undefined;
   Login: undefined;
   SignUp: undefined;
   ForgotPassword: undefined;
@@ -33,7 +36,7 @@ export type RootStackParamList = {
   WorkoutSetup: undefined;
   RoundPlanner: { config: WorkoutConfig };
   ActiveWorkout: { config: WorkoutConfig };
-  WorkoutComplete: { totalRounds: number; totalTime: number };
+  WorkoutComplete: { totalRounds: number; totalTime: number; config: WorkoutConfig };
   Profile: undefined;
 };
 
@@ -97,9 +100,14 @@ const stackScreenOptions = {
 export function AppNavigator() {
   const { user, loading: authLoading } = useAuth();
   const { isSubscribed, isLoading: subLoading } = useSubscription();
+  const [hasSeenOnboarding, setHasSeenOnboarding] = useState<boolean | null>(null);
 
-  // Show spinner while auth session and subscription status are resolving
-  if (authLoading || subLoading) return <LoadingScreen />;
+  useEffect(() => {
+    AsyncStorage.getItem(ONBOARDING_KEY).then((val) => setHasSeenOnboarding(val === 'true'));
+  }, []);
+
+  // Show spinner while auth session, subscription status, and onboarding flag are resolving
+  if (authLoading || subLoading || hasSeenOnboarding === null) return <LoadingScreen />;
 
   return (
     <NavigationContainer>
@@ -107,6 +115,13 @@ export function AppNavigator() {
         {!user ? (
           // ── Auth flow ──────────────────────────────────────────────────
           <>
+            {!hasSeenOnboarding && (
+              <Stack.Screen
+                name="Onboarding"
+                component={OnboardingScreen}
+                options={{ headerShown: false }}
+              />
+            )}
             <Stack.Screen
               name="Login"
               component={LoginScreen}

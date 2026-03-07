@@ -17,6 +17,14 @@ import { useWorkoutSync } from '../hooks/useWorkoutSync';
 
 type HomeNavProp = StackNavigationProp<RootStackParamList>;
 
+function relativeDate(iso: string): string {
+  const diff = Date.now() - new Date(iso).getTime();
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  if (days === 0) return 'Today';
+  if (days === 1) return 'Yesterday';
+  return `${days} days ago`;
+}
+
 export function HomeScreen() {
   const navigation = useNavigation<HomeNavProp>();
   const { user } = useAuth();
@@ -79,16 +87,19 @@ export function HomeScreen() {
       </TouchableOpacity>
 
       {/* Recent Workouts */}
-      {recent.length > 0 && (
+      {recent.filter(w => w.completedAt).length > 0 && (
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Recent Workouts</Text>
-          {recent.slice(0, 3).map((cfg) => (
+          {recent.filter(w => w.completedAt).slice(0, 3).map((cfg) => (
             <TouchableOpacity
               key={cfg.id}
               style={styles.recentCard}
               onPress={() => navigation.navigate('ActiveWorkout', { config: cfg })}
             >
-              <Text style={styles.recentName}>{cfg.name}</Text>
+              <View style={styles.recentHeader}>
+                <Text style={styles.recentName}>{cfg.name}</Text>
+                <Text style={styles.recentDate}>{relativeDate(cfg.completedAt!)}</Text>
+              </View>
               <Text style={styles.recentMeta}>
                 {cfg.roundCount} rounds · {cfg.roundDuration / 60} min · {cfg.restDuration}s rest
               </Text>
@@ -210,11 +221,20 @@ const styles = StyleSheet.create({
     padding: 14,
     marginBottom: 8,
   },
+  recentHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    marginBottom: 3,
+  },
   recentName: {
     color: COLORS.textPrimary,
     fontSize: 15,
     fontWeight: '600',
-    marginBottom: 3,
+  },
+  recentDate: {
+    color: COLORS.textMuted,
+    fontSize: 12,
   },
   recentMeta: {
     color: COLORS.textMuted,
