@@ -13,7 +13,9 @@ import { WorkoutCompleteScreen } from '../screens/WorkoutCompleteScreen';
 import { ComboCatalogScreen } from '../screens/ComboCatalogScreen';
 import LoginScreen from '../screens/auth/LoginScreen';
 import SignUpScreen from '../screens/auth/SignUpScreen';
+import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
 import PaywallScreen from '../screens/PaywallScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import { WorkoutConfig } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { useSubscription } from '../context/SubscriptionContext';
@@ -22,6 +24,7 @@ export type RootStackParamList = {
   // Auth flow
   Login: undefined;
   SignUp: undefined;
+  ForgotPassword: undefined;
   // Paywall flow
   Paywall: undefined;
   ComboCatalogPreview: undefined;
@@ -31,6 +34,7 @@ export type RootStackParamList = {
   RoundPlanner: { config: WorkoutConfig };
   ActiveWorkout: { config: WorkoutConfig };
   WorkoutComplete: { totalRounds: number; totalTime: number };
+  Profile: undefined;
 };
 
 export type TabParamList = {
@@ -113,6 +117,11 @@ export function AppNavigator() {
               component={SignUpScreen}
               options={{ headerShown: false }}
             />
+            <Stack.Screen
+              name="ForgotPassword"
+              component={ForgotPasswordScreen}
+              options={{ headerShown: false }}
+            />
           </>
         ) : !isSubscribed ? (
           // ── Paywall flow ───────────────────────────────────────────────
@@ -155,6 +164,11 @@ export function AppNavigator() {
               name="WorkoutComplete"
               component={WorkoutCompleteScreen}
               options={{ headerShown: false, gestureEnabled: false }}
+            />
+            <Stack.Screen
+              name="Profile"
+              component={ProfileScreen}
+              options={{ headerShown: false, presentation: 'modal' }}
             />
           </>
         )}

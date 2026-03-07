@@ -19,7 +19,7 @@ type HomeNavProp = StackNavigationProp<RootStackParamList>;
 
 export function HomeScreen() {
   const navigation = useNavigation<HomeNavProp>();
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const { loadWorkouts } = useWorkoutSync();
   const [recent, setRecent] = useState<WorkoutConfig[]>([]);
 
@@ -49,12 +49,12 @@ export function HomeScreen() {
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {/* Account row — user is always authenticated here */}
       <View style={styles.accountRow}>
-        <View style={styles.avatar}>
+        <TouchableOpacity style={styles.avatar} onPress={() => navigation.navigate('Profile')}>
           <Text style={styles.avatarText}>{initials}</Text>
-        </View>
+        </TouchableOpacity>
         <Text style={styles.accountEmail} numberOfLines={1}>{user?.email}</Text>
-        <TouchableOpacity onPress={signOut} style={styles.signOutBtn}>
-          <Text style={styles.signOutText}>Sign Out</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.profileBtn}>
+          <Text style={styles.profileBtnText}>Account ›</Text>
         </TouchableOpacity>
       </View>
 
@@ -137,14 +137,14 @@ const styles = StyleSheet.create({
     color: COLORS.textSecondary,
     fontSize: 13,
   },
-  signOutBtn: {
+  profileBtn: {
     paddingHorizontal: SPACING.sm,
     paddingVertical: 4,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: COLORS.border,
   },
-  signOutText: {
+  profileBtnText: {
     color: COLORS.textMuted,
     fontSize: 12,
   },

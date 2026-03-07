@@ -5,11 +5,13 @@ import { useAuth } from './AuthContext';
 
 const RC_API_KEY_IOS = process.env.EXPO_PUBLIC_RC_API_KEY_IOS!;
 const RC_API_KEY_ANDROID = process.env.EXPO_PUBLIC_RC_API_KEY_ANDROID!;
-const ENTITLEMENT = 'premium';
+const ENTITLEMENT = 'MTApp Pro';
 
 interface SubscriptionContextValue {
   isSubscribed: boolean;
   isLoading: boolean;
+  expiresDate: Date | null;
+  isTrial: boolean;
   subscribe: () => Promise<{ error: string | null }>;
   restorePurchases: () => Promise<{ error: string | null }>;
 }
@@ -24,7 +26,16 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
   const { user } = useAuth();
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [expiresDate, setExpiresDate] = useState<Date | null>(null);
+  const [isTrial, setIsTrial] = useState(false);
   const configured = useRef(false);
+
+  function applyCustomerInfo(info: CustomerInfo) {
+    const entitlement = info.entitlements.active[ENTITLEMENT];
+setIsSubscribed(entitlement !== undefined);
+    setExpiresDate(entitlement?.expirationDate ? new Date(entitlement.expirationDate) : null);
+    setIsTrial(entitlement?.periodType === 'TRIAL');
+  }
 
   // Configure RevenueCat once on mount
   useEffect(() => {
@@ -43,14 +54,17 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
       try {
         if (user) {
           const { customerInfo } = await Purchases.logIn(user.id);
-          setIsSubscribed(hasEntitlement(customerInfo));
+          applyCustomerInfo(customerInfo);
         } else {
           await Purchases.logOut();
           setIsSubscribed(false);
+          setExpiresDate(null);
+          setIsTrial(false);
         }
       } catch (e) {
-        // If RC isn't reachable (e.g. no API key set yet in dev), fail open in dev, closed in prod
-        setIsSubscribed(__DEV__);
+        setIsSubscribed(false);
+        setExpiresDate(null);
+        setIsTrial(false);
       } finally {
         setIsLoading(false);
       }
@@ -61,7 +75,7 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
   // Listen for real-time subscription updates (e.g. after purchase sheet closes)
   useEffect(() => {
     const onCustomerInfoUpdate = (info: CustomerInfo) => {
-      setIsSubscribed(hasEntitlement(info));
+      applyCustomerInfo(info);
     };
     Purchases.addCustomerInfoUpdateListener(onCustomerInfoUpdate);
     return () => { Purchases.removeCustomerInfoUpdateListener(onCustomerInfoUpdate); };
@@ -73,7 +87,7 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
       const pkg = offerings.current?.annual ?? offerings.current?.availablePackages[0];
       if (!pkg) return { error: 'No subscription package available' };
       const { customerInfo } = await Purchases.purchasePackage(pkg);
-      setIsSubscribed(hasEntitlement(customerInfo));
+      applyCustomerInfo(customerInfo);
       return { error: null };
     } catch (e: any) {
       if (e.userCancelled) return { error: null }; // user dismissed sheet
@@ -85,7 +99,7 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
     try {
       const customerInfo = await Purchases.restorePurchases();
       const restored = hasEntitlement(customerInfo);
-      setIsSubscribed(restored);
+      applyCustomerInfo(customerInfo);
       if (!restored) return { error: 'No active subscription found to restore.' };
       return { error: null };
     } catch (e: any) {
@@ -94,7 +108,7 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
   };
 
   return (
-    <SubscriptionContext.Provider value={{ isSubscribed, isLoading, subscribe, restorePurchases }}>
+    <SubscriptionContext.Provider value={{ isSubscribed, isLoading, expiresDate, isTrial, subscribe, restorePurchases }}>
       {children}
     </SubscriptionContext.Provider>
   );
