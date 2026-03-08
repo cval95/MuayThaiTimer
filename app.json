@@ -3,6 +3,7 @@
     "name": "MuayThaiTimer",
     "slug": "MuayThaiTimer",
     "version": "1.0.0",
+    "scheme": "muaythaitimer",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
