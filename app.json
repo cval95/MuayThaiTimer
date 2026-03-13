@@ -3,11 +3,12 @@
     "name": "MuayThaiTimer",
     "slug": "MuayThaiTimer",
     "version": "1.0.0",
+    "scheme": "muaythaitimer",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/mt-logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/mt-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

@@ -228,6 +228,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   recentName: {
+    flex: 1,
     color: COLORS.textPrimary,
     fontSize: 15,
     fontWeight: '600',
