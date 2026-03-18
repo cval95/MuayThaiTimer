@@ -24,7 +24,7 @@ function hasEntitlement(info: CustomerInfo): boolean {
 
 export function SubscriptionProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(true); // TEMP: bypass paywall for testing
   const [isLoading, setIsLoading] = useState(true);
   const [expiresDate, setExpiresDate] = useState<Date | null>(null);
   const [isTrial, setIsTrial] = useState(false);
