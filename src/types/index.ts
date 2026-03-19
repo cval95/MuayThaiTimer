@@ -26,6 +26,7 @@ export interface Combo {
   coachingCue?: string;
   isCustom?: boolean;
   isFreestyle?: boolean;
+  isDrill?: boolean;
 }
 
 export interface RoundPlan {

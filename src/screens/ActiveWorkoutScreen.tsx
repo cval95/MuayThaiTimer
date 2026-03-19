@@ -142,6 +142,22 @@ export function ActiveWorkoutScreen({ navigation, route }: Props) {
             <Text style={styles.comboName}>{workout.currentRoundPlan.combo.name}</Text>
             {workout.currentRoundPlan.combo.isFreestyle ? (
               <Text style={styles.freestylePrompt}>YOUR ROUND — YOUR RULES</Text>
+            ) : workout.currentRoundPlan.combo.isDrill ? (
+              <>
+                {workout.currentRoundPlan.combo.techniques.length > 0 && (
+                  <>
+                    <Text style={styles.drillLabel}>WORK WITHIN THESE</Text>
+                    <View style={styles.techniquesRow}>
+                      {workout.currentRoundPlan.combo.techniques.map((t) => (
+                        <View key={t.shortCode} style={styles.techBadge}>
+                          <Text style={styles.techCode}>{t.shortCode}</Text>
+                          <Text style={styles.techName}>{t.name}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  </>
+                )}
+              </>
             ) : (
               <View style={styles.techniquesRow}>
                 {workout.currentRoundPlan.combo.techniques.map((t, i) => (
@@ -180,9 +196,9 @@ export function ActiveWorkoutScreen({ navigation, route }: Props) {
                   {workout.nextRoundPlan.combo.name}
                 </Text>
                 <Text style={styles.nextRoundTech}>
-                  {workout.nextRoundPlan.combo.techniques
-                    .map((t) => t.name)
-                    .join(' → ')}
+                  {workout.nextRoundPlan.combo.isFreestyle || workout.nextRoundPlan.combo.isDrill
+                    ? workout.nextRoundPlan.combo.coachingCue ?? ''
+                    : workout.nextRoundPlan.combo.techniques.map((t) => t.name).join(' → ')}
                 </Text>
               </View>
             ) : (
@@ -299,6 +315,14 @@ const styles = StyleSheet.create({
     letterSpacing: 3,
     textAlign: 'center',
     marginBottom: 14,
+  },
+  drillLabel: {
+    color: COLORS.textMuted,
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 2,
+    marginBottom: 10,
+    textAlign: 'center',
   },
   cue: {
     color: COLORS.textMuted,
