@@ -18,6 +18,7 @@ import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
 import PaywallScreen from '../screens/PaywallScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import OnboardingScreen, { ONBOARDING_KEY } from '../screens/OnboardingScreen';
+import { CustomComboBuilderScreen } from '../screens/CustomComboBuilderScreen';
 import { WorkoutConfig } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { useSubscription } from '../context/SubscriptionContext';
@@ -38,6 +39,7 @@ export type RootStackParamList = {
   ActiveWorkout: { config: WorkoutConfig };
   WorkoutComplete: { totalRounds: number; totalTime: number; config: WorkoutConfig };
   Profile: undefined;
+  CustomComboBuilder: undefined;
 };
 
 export type TabParamList = {
@@ -184,6 +186,11 @@ export function AppNavigator() {
               name="Profile"
               component={ProfileScreen}
               options={{ headerShown: false, presentation: 'modal' }}
+            />
+            <Stack.Screen
+              name="CustomComboBuilder"
+              component={CustomComboBuilderScreen}
+              options={{ title: 'Create Combo', presentation: 'modal' }}
             />
           </>
         )}

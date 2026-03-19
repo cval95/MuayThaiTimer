@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   FlatList,
   Modal,
@@ -8,13 +8,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { Combo, RoundPlan, WorkoutConfig } from '../types';
-import { COMBOS } from '../data/combos';
+import { COMBOS, FREESTYLE_COMBO } from '../data/combos';
 import { RoundRow } from '../components/RoundRow';
 import { ComboCard } from '../components/ComboCard';
 import { buildRoundPlans } from '../utils/workoutBuilder';
+import { loadCustomCombos } from '../utils/customCombos';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { COLORS } from '../utils/theme';
 import { useWorkoutSync } from '../hooks/useWorkoutSync';
@@ -32,10 +34,21 @@ export function RoundPlannerScreen({ navigation, route }: Props) {
     return buildRoundPlans(incoming);
   });
   const [editingRound, setEditingRound] = useState<number | null>(null);
+  const [customCombos, setCustomCombos] = useState<Combo[]>([]);
 
-  const availableCombos = COMBOS.filter((c) =>
-    c.categories.some((cat) => incoming.selectedCategories.includes(cat))
+  useFocusEffect(
+    useCallback(() => {
+      loadCustomCombos().then(setCustomCombos);
+    }, [])
   );
+
+  const availableCombos = [
+    FREESTYLE_COMBO,
+    ...customCombos,
+    ...COMBOS.filter((c) =>
+      c.categories.some((cat) => incoming.selectedCategories.includes(cat))
+    ),
+  ];
 
   const selectCombo = (combo: Combo) => {
     if (editingRound === null) return;
@@ -90,10 +103,18 @@ export function RoundPlannerScreen({ navigation, route }: Props) {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalHeader}>
-            <Text style={styles.modalTitle}>Choose Combo — Round {editingRound}</Text>
-            <TouchableOpacity onPress={() => setEditingRound(null)}>
-              <Text style={styles.modalClose}>✕</Text>
-            </TouchableOpacity>
+            <Text style={styles.modalTitle}>Round {editingRound}</Text>
+            <View style={styles.modalHeaderRight}>
+              <TouchableOpacity
+                style={styles.createBtn}
+                onPress={() => { setEditingRound(null); navigation.navigate('CustomComboBuilder'); }}
+              >
+                <Text style={styles.createBtnText}>+ Custom</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setEditingRound(null)}>
+                <Text style={styles.modalClose}>✕</Text>
+              </TouchableOpacity>
+            </View>
           </View>
           <ScrollView contentContainerStyle={styles.modalList}>
             {availableCombos.map((combo) => (
@@ -142,6 +163,22 @@ const styles = StyleSheet.create({
   modalTitle: {
     color: COLORS.textPrimary,
     fontSize: 17,
+    fontWeight: '700',
+  },
+  modalHeaderRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  createBtn: {
+    backgroundColor: COLORS.accentDark,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  createBtnText: {
+    color: COLORS.accent,
+    fontSize: 13,
     fontWeight: '700',
   },
   modalClose: { color: COLORS.textMuted, fontSize: 20 },

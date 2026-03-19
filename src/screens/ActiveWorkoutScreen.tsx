@@ -140,11 +140,21 @@ export function ActiveWorkoutScreen({ navigation, route }: Props) {
         {workout.phase === 'round' && workout.currentRoundPlan ? (
           <>
             <Text style={styles.comboName}>{workout.currentRoundPlan.combo.name}</Text>
-            <Text style={styles.comboTechniques}>
-              {workout.currentRoundPlan.combo.techniques
-                .map((t) => t.name)
-                .join('  →  ')}
-            </Text>
+            {workout.currentRoundPlan.combo.isFreestyle ? (
+              <Text style={styles.freestylePrompt}>YOUR ROUND — YOUR RULES</Text>
+            ) : (
+              <View style={styles.techniquesRow}>
+                {workout.currentRoundPlan.combo.techniques.map((t, i) => (
+                  <React.Fragment key={i}>
+                    {i > 0 && <Text style={styles.techArrow}>›</Text>}
+                    <View style={styles.techBadge}>
+                      <Text style={styles.techCode}>{t.shortCode}</Text>
+                      <Text style={styles.techName}>{t.name}</Text>
+                    </View>
+                  </React.Fragment>
+                ))}
+              </View>
+            )}
             {workout.currentRoundPlan.combo.coachingCue ? (
               <Text style={styles.cue}>
                 "{workout.currentRoundPlan.combo.coachingCue}"
@@ -247,13 +257,48 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
   },
-  comboTechniques: {
+  techniquesRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 14,
+    gap: 6,
+  },
+  techBadge: {
+    alignItems: 'center',
+    backgroundColor: COLORS.surface,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    minWidth: 52,
+  },
+  techCode: {
     color: COLORS.accent,
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: '800',
+    lineHeight: 24,
+  },
+  techName: {
+    color: COLORS.textSecondary,
+    fontSize: 10,
     fontWeight: '600',
+    marginTop: 2,
     textAlign: 'center',
-    marginBottom: 12,
-    letterSpacing: 0.5,
+  },
+  techArrow: {
+    color: COLORS.textDim,
+    fontSize: 20,
+    fontWeight: '300',
+    marginHorizontal: 2,
+  },
+  freestylePrompt: {
+    color: COLORS.accent,
+    fontSize: 14,
+    fontWeight: '800',
+    letterSpacing: 3,
+    textAlign: 'center',
+    marginBottom: 14,
   },
   cue: {
     color: COLORS.textMuted,
