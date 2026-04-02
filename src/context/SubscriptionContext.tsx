@@ -6,7 +6,6 @@ import { useAuth } from './AuthContext';
 const RC_API_KEY_IOS = process.env.EXPO_PUBLIC_RC_API_KEY_IOS!;
 const RC_API_KEY_ANDROID = process.env.EXPO_PUBLIC_RC_API_KEY_ANDROID!;
 const ENTITLEMENT = 'MTApp Pro';
-const BYPASS_PAYWALL = true; // TEMP: remove before production
 
 interface SubscriptionContextValue {
   isSubscribed: boolean;
@@ -25,7 +24,7 @@ function hasEntitlement(info: CustomerInfo): boolean {
 
 export function SubscriptionProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
-  const [isSubscribed, setIsSubscribed] = useState(true); // TEMP: bypass paywall for testing
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [expiresDate, setExpiresDate] = useState<Date | null>(null);
   const [isTrial, setIsTrial] = useState(false);
@@ -33,7 +32,7 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
 
   function applyCustomerInfo(info: CustomerInfo) {
     const entitlement = info.entitlements.active[ENTITLEMENT];
-    if (!BYPASS_PAYWALL) setIsSubscribed(entitlement !== undefined);
+    setIsSubscribed(entitlement !== undefined);
     setExpiresDate(entitlement?.expirationDate ? new Date(entitlement.expirationDate) : null);
     setIsTrial(entitlement?.periodType === 'TRIAL');
   }
@@ -58,12 +57,12 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
           applyCustomerInfo(customerInfo);
         } else {
           await Purchases.logOut();
-          if (!BYPASS_PAYWALL) setIsSubscribed(false);
+          setIsSubscribed(false);
           setExpiresDate(null);
           setIsTrial(false);
         }
       } catch (e) {
-        if (!BYPASS_PAYWALL) setIsSubscribed(false);
+        setIsSubscribed(false);
         setExpiresDate(null);
         setIsTrial(false);
       } finally {
