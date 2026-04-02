@@ -32,7 +32,7 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
 
   function applyCustomerInfo(info: CustomerInfo) {
     const entitlement = info.entitlements.active[ENTITLEMENT];
-setIsSubscribed(entitlement !== undefined);
+    setIsSubscribed(entitlement !== undefined);
     setExpiresDate(entitlement?.expirationDate ? new Date(entitlement.expirationDate) : null);
     setIsTrial(entitlement?.periodType === 'TRIAL');
   }

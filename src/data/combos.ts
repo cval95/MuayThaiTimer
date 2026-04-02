@@ -34,11 +34,11 @@ export const COMBOS: Combo[] = [
   },
   {
     id: 'b-jab-cross-hook',
-    name: 'Jab – Cross – Hook',
+    name: 'Jab – Cross – Left Hook',
     techniques: [
       { name: 'Jab', shortCode: '1' },
       { name: 'Cross', shortCode: '2' },
-      { name: 'Hook', shortCode: '3' },
+      { name: 'Left Hook', shortCode: '3' },
     ],
     categories: ['boxing'],
     difficulty: 'beginner',
@@ -47,11 +47,11 @@ export const COMBOS: Combo[] = [
   },
   {
     id: 'b-jab-cross-hook-cross',
-    name: 'Jab – Cross – Hook – Cross',
+    name: 'Jab – Cross – Left Hook – Cross',
     techniques: [
       { name: 'Jab', shortCode: '1' },
       { name: 'Cross', shortCode: '2' },
-      { name: 'Hook', shortCode: '3' },
+      { name: 'Left Hook', shortCode: '3' },
       { name: 'Cross', shortCode: '2' },
     ],
     categories: ['boxing'],
@@ -74,9 +74,9 @@ export const COMBOS: Combo[] = [
   },
   {
     id: 'b-hook-cross',
-    name: 'Hook – Cross',
+    name: 'Left Hook – Cross',
     techniques: [
-      { name: 'Hook', shortCode: '3' },
+      { name: 'Left Hook', shortCode: '3' },
       { name: 'Cross', shortCode: '2' },
     ],
     categories: ['boxing'],
@@ -86,10 +86,10 @@ export const COMBOS: Combo[] = [
   },
   {
     id: 'b-cross-hook-cross',
-    name: 'Cross – Hook – Cross',
+    name: 'Cross – Left Hook – Cross',
     techniques: [
       { name: 'Cross', shortCode: '2' },
-      { name: 'Hook', shortCode: '3' },
+      { name: 'Left Hook', shortCode: '3' },
       { name: 'Cross', shortCode: '2' },
     ],
     categories: ['boxing'],
@@ -111,10 +111,10 @@ export const COMBOS: Combo[] = [
   },
   {
     id: 'b-uppercut-hook',
-    name: 'Uppercut – Hook',
+    name: 'Left Uppercut – Left Hook',
     techniques: [
-      { name: 'Uppercut', shortCode: '4' },
-      { name: 'Hook', shortCode: '3' },
+      { name: 'Left Uppercut', shortCode: '5' },
+      { name: 'Left Hook', shortCode: '3' },
     ],
     categories: ['boxing'],
     difficulty: 'intermediate',
@@ -123,12 +123,12 @@ export const COMBOS: Combo[] = [
   },
   {
     id: 'b-jab-cross-uppercut-hook',
-    name: 'Jab – Cross – Uppercut – Hook',
+    name: 'Jab – Cross – Left Uppercut – Left Hook',
     techniques: [
       { name: 'Jab', shortCode: '1' },
       { name: 'Cross', shortCode: '2' },
-      { name: 'Uppercut', shortCode: '4' },
-      { name: 'Hook', shortCode: '3' },
+      { name: 'Left Uppercut', shortCode: '5' },
+      { name: 'Left Hook', shortCode: '3' },
     ],
     categories: ['boxing'],
     difficulty: 'advanced',
@@ -137,10 +137,10 @@ export const COMBOS: Combo[] = [
   },
   {
     id: 'b-hook-uppercut-cross',
-    name: 'Hook – Uppercut – Cross',
+    name: 'Left Hook – Right Uppercut – Cross',
     techniques: [
-      { name: 'Hook', shortCode: '3' },
-      { name: 'Uppercut', shortCode: '4' },
+      { name: 'Left Hook', shortCode: '3' },
+      { name: 'Right Uppercut', shortCode: '6' },
       { name: 'Cross', shortCode: '2' },
     ],
     categories: ['boxing'],
@@ -232,9 +232,9 @@ export const COMBOS: Combo[] = [
   },
   {
     id: 'k-hook-body-kick',
-    name: 'Hook – Body Kick',
+    name: 'Left Hook – Body Kick',
     techniques: [
-      { name: 'Hook', shortCode: '3' },
+      { name: 'Left Hook', shortCode: '3' },
       { name: 'Body Kick', shortCode: 'BRK' },
     ],
     categories: ['kicks', 'combinations'],
@@ -488,10 +488,10 @@ export const COMBOS: Combo[] = [
   },
   {
     id: 'd-bob-weave-hook',
-    name: 'Bob & Weave – Hook',
+    name: 'Bob & Weave – Left Hook',
     techniques: [
       { name: 'Bob & Weave', shortCode: 'BW' },
-      { name: 'Hook', shortCode: '3' },
+      { name: 'Left Hook', shortCode: '3' },
     ],
     categories: ['defense'],
     difficulty: 'intermediate',
@@ -562,11 +562,11 @@ export const COMBOS: Combo[] = [
   },
   {
     id: 'co-jab-cross-hook-body-kick',
-    name: 'Jab – Cross – Hook – Body Kick',
+    name: 'Jab – Cross – Left Hook – Body Kick',
     techniques: [
       { name: 'Jab', shortCode: '1' },
       { name: 'Cross', shortCode: '2' },
-      { name: 'Hook', shortCode: '3' },
+      { name: 'Left Hook', shortCode: '3' },
       { name: 'Body Kick', shortCode: 'BRK' },
     ],
     categories: ['combinations'],
@@ -589,12 +589,12 @@ export const COMBOS: Combo[] = [
   },
   {
     id: 'co-low-kick-jab-cross-hook',
-    name: 'Low Kick – Jab – Cross – Hook',
+    name: 'Low Kick – Jab – Cross – Left Hook',
     techniques: [
       { name: 'Low Kick', shortCode: 'LK' },
       { name: 'Jab', shortCode: '1' },
       { name: 'Cross', shortCode: '2' },
-      { name: 'Hook', shortCode: '3' },
+      { name: 'Left Hook', shortCode: '3' },
     ],
     categories: ['combinations'],
     difficulty: 'intermediate',
@@ -617,10 +617,10 @@ export const COMBOS: Combo[] = [
   },
   {
     id: 'co-cross-hook-body-kick-head-kick',
-    name: 'Cross – Hook – Body Kick – Head Kick',
+    name: 'Cross – Left Hook – Body Kick – Head Kick',
     techniques: [
       { name: 'Cross', shortCode: '2' },
-      { name: 'Hook', shortCode: '3' },
+      { name: 'Left Hook', shortCode: '3' },
       { name: 'Body Kick', shortCode: 'BRK' },
       { name: 'Head Kick', shortCode: 'HK' },
     ],
@@ -664,7 +664,108 @@ export const COMBOS: Combo[] = [
     focuses: ['southpaw', 'power'],
     coachingCue: 'All four weapons in one flowing combo. Stay aggressive.',
   },
+
+  // ─── CHECK COMBOS ──────────────────────────────────────────────────────────
+  {
+    id: 'ch-jab-cross-check',
+    name: 'Jab – Cross – Check',
+    techniques: [
+      { name: 'Jab', shortCode: '1' },
+      { name: 'Cross', shortCode: '2' },
+      { name: 'Check', shortCode: 'CH' },
+    ],
+    categories: ['defense', 'boxing', 'combinations'],
+    difficulty: 'intermediate',
+    coachingCue: 'Throw the 1-2 to make them counter-kick, lift the knee to check it.',
+  },
+  {
+    id: 'ch-jab-roundhouse-check',
+    name: 'Jab – Roundhouse – Check',
+    techniques: [
+      { name: 'Jab', shortCode: '1' },
+      { name: 'Roundhouse', shortCode: 'RK' },
+      { name: 'Check', shortCode: 'CH' },
+    ],
+    categories: ['defense', 'kicks', 'combinations'],
+    difficulty: 'intermediate',
+    coachingCue: 'Jab to set up your kick, then immediately check their counter.',
+  },
+  {
+    id: 'ch-cross-body-kick-check',
+    name: 'Cross – Body Kick – Check',
+    techniques: [
+      { name: 'Cross', shortCode: '2' },
+      { name: 'Body Kick', shortCode: 'BRK' },
+      { name: 'Check', shortCode: 'CH' },
+    ],
+    categories: ['defense', 'kicks', 'combinations'],
+    difficulty: 'intermediate',
+    focuses: ['power'],
+    coachingCue: 'Body kick forces a reaction — anticipate the counter and check.',
+  },
+  {
+    id: 'ch-jab-cross-hook-check',
+    name: 'Jab – Cross – Left Hook – Check',
+    techniques: [
+      { name: 'Jab', shortCode: '1' },
+      { name: 'Cross', shortCode: '2' },
+      { name: 'Left Hook', shortCode: '3' },
+      { name: 'Check', shortCode: 'CH' },
+    ],
+    categories: ['defense', 'boxing', 'combinations'],
+    difficulty: 'advanced',
+    coachingCue: '1-2-3 combo then immediately check their kick counter. Stay composed.',
+  },
+
+  // ─── KICK DRILLS ───────────────────────────────────────────────────────────
+  {
+    id: 'kd-roundhouse-both-legs',
+    name: 'Lead Roundhouse – Rear Roundhouse',
+    techniques: [
+      { name: 'Lead Roundhouse', shortCode: 'LRK' },
+      { name: 'Rear Roundhouse', shortCode: 'RRK' },
+    ],
+    categories: ['kicks'],
+    difficulty: 'intermediate',
+    focuses: ['power', 'lead-side'],
+    coachingCue: 'Switch your weight fully between kicks. Drive from the hip each time.',
+  },
+  {
+    id: 'kd-teep-roundhouse',
+    name: 'Teep – Rear Roundhouse',
+    techniques: [
+      { name: 'Teep', shortCode: 'T' },
+      { name: 'Rear Roundhouse', shortCode: 'RRK' },
+    ],
+    categories: ['kicks', 'combinations'],
+    difficulty: 'beginner',
+    focuses: ['lead-side'],
+    coachingCue: 'Teep to create distance, step and fire the rear kick while they recover.',
+  },
+  {
+    id: 'kd-check-counter-low',
+    name: 'Check – Counter Low Kick – Body Kick',
+    techniques: [
+      { name: 'Check', shortCode: 'CH' },
+      { name: 'Low Kick', shortCode: 'LK' },
+      { name: 'Body Kick', shortCode: 'BRK' },
+    ],
+    categories: ['defense', 'kicks'],
+    difficulty: 'advanced',
+    coachingCue: 'Check their kick, immediately low kick to cut the base, then body kick.',
+  },
 ];
+
+// Special freestyle combo — no fixed techniques, user improvises
+export const FREESTYLE_COMBO: Combo = {
+  id: 'freestyle',
+  name: 'Freestyle',
+  techniques: [],
+  categories: ['boxing', 'kicks', 'elbows', 'knees', 'clinch', 'defense', 'combinations'],
+  difficulty: 'beginner',
+  isFreestyle: true,
+  coachingCue: 'Work what feels natural. Mix your weapons. Trust your instincts.',
+};
 
 export const getCombosByCategories = (categories: string[]): Combo[] => {
   if (categories.length === 0) return COMBOS;

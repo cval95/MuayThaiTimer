@@ -24,6 +24,9 @@ export interface Combo {
   difficulty: Difficulty;
   focuses?: Focus[];
   coachingCue?: string;
+  isCustom?: boolean;
+  isFreestyle?: boolean;
+  isDrill?: boolean;
 }
 
 export interface RoundPlan {

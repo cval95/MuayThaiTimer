@@ -133,6 +133,38 @@ export function ActiveWorkoutScreen({ navigation, route }: Props) {
           color={phaseColor}
           size={240}
         />
+        {workout.phase !== 'complete' && (
+          <View style={styles.roundIndicator}>
+            <Text style={styles.roundIndicatorText}>
+              ROUND {workout.phase === 'prep' ? 1 : workout.currentRound} / {workout.totalRounds}
+            </Text>
+            <View style={styles.roundDots}>
+              {Array.from({ length: workout.totalRounds }).map((_, i) => {
+                const roundNum = i + 1;
+                const isDone =
+                  workout.phase === 'prep'
+                    ? false
+                    : workout.phase === 'rest'
+                    ? roundNum < workout.currentRound
+                    : roundNum < workout.currentRound;
+                const isCurrent =
+                  workout.phase === 'prep'
+                    ? roundNum === 1
+                    : roundNum === workout.currentRound;
+                return (
+                  <View
+                    key={i}
+                    style={[
+                      styles.roundDot,
+                      isDone && styles.roundDotDone,
+                      isCurrent && { backgroundColor: phaseColor },
+                    ]}
+                  />
+                );
+              })}
+            </View>
+          </View>
+        )}
       </View>
 
       {/* Combo Display */}
@@ -140,11 +172,37 @@ export function ActiveWorkoutScreen({ navigation, route }: Props) {
         {workout.phase === 'round' && workout.currentRoundPlan ? (
           <>
             <Text style={styles.comboName}>{workout.currentRoundPlan.combo.name}</Text>
-            <Text style={styles.comboTechniques}>
-              {workout.currentRoundPlan.combo.techniques
-                .map((t) => t.name)
-                .join('  →  ')}
-            </Text>
+            {workout.currentRoundPlan.combo.isFreestyle ? (
+              <Text style={styles.freestylePrompt}>YOUR ROUND — YOUR RULES</Text>
+            ) : workout.currentRoundPlan.combo.isDrill ? (
+              <>
+                {workout.currentRoundPlan.combo.techniques.length > 0 && (
+                  <>
+                    <Text style={styles.drillLabel}>WORK WITHIN THESE</Text>
+                    <View style={styles.techniquesRow}>
+                      {workout.currentRoundPlan.combo.techniques.map((t) => (
+                        <View key={t.shortCode} style={styles.techBadge}>
+                          <Text style={styles.techCode}>{t.shortCode}</Text>
+                          <Text style={styles.techName}>{t.name}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  </>
+                )}
+              </>
+            ) : (
+              <View style={styles.techniquesRow}>
+                {workout.currentRoundPlan.combo.techniques.map((t, i) => (
+                  <React.Fragment key={i}>
+                    {i > 0 && <Text style={styles.techArrow}>›</Text>}
+                    <View style={styles.techBadge}>
+                      <Text style={styles.techCode}>{t.shortCode}</Text>
+                      <Text style={styles.techName}>{t.name}</Text>
+                    </View>
+                  </React.Fragment>
+                ))}
+              </View>
+            )}
             {workout.currentRoundPlan.combo.coachingCue ? (
               <Text style={styles.cue}>
                 "{workout.currentRoundPlan.combo.coachingCue}"
@@ -170,9 +228,9 @@ export function ActiveWorkoutScreen({ navigation, route }: Props) {
                   {workout.nextRoundPlan.combo.name}
                 </Text>
                 <Text style={styles.nextRoundTech}>
-                  {workout.nextRoundPlan.combo.techniques
-                    .map((t) => t.name)
-                    .join(' → ')}
+                  {workout.nextRoundPlan.combo.isFreestyle || workout.nextRoundPlan.combo.isDrill
+                    ? workout.nextRoundPlan.combo.coachingCue ?? ''
+                    : workout.nextRoundPlan.combo.techniques.map((t) => t.name).join(' → ')}
                 </Text>
               </View>
             ) : (
@@ -247,13 +305,56 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
   },
-  comboTechniques: {
+  techniquesRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 14,
+    gap: 6,
+  },
+  techBadge: {
+    alignItems: 'center',
+    backgroundColor: COLORS.surface,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    minWidth: 52,
+  },
+  techCode: {
     color: COLORS.accent,
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: '800',
+    lineHeight: 24,
+  },
+  techName: {
+    color: COLORS.textSecondary,
+    fontSize: 10,
     fontWeight: '600',
+    marginTop: 2,
     textAlign: 'center',
-    marginBottom: 12,
-    letterSpacing: 0.5,
+  },
+  techArrow: {
+    color: COLORS.textDim,
+    fontSize: 20,
+    fontWeight: '300',
+    marginHorizontal: 2,
+  },
+  freestylePrompt: {
+    color: COLORS.accent,
+    fontSize: 14,
+    fontWeight: '800',
+    letterSpacing: 3,
+    textAlign: 'center',
+    marginBottom: 14,
+  },
+  drillLabel: {
+    color: COLORS.textMuted,
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 2,
+    marginBottom: 10,
+    textAlign: 'center',
   },
   cue: {
     color: COLORS.textMuted,
@@ -338,5 +439,29 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 13,
     letterSpacing: 1,
+  },
+  roundIndicator: {
+    alignItems: 'center',
+    marginTop: 12,
+  },
+  roundIndicatorText: {
+    color: COLORS.textMuted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 2,
+    marginBottom: 8,
+  },
+  roundDots: {
+    flexDirection: 'row',
+    gap: 6,
+  },
+  roundDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: COLORS.surface,
+  },
+  roundDotDone: {
+    backgroundColor: COLORS.textMuted,
   },
 });
