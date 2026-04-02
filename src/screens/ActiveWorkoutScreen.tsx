@@ -133,6 +133,38 @@ export function ActiveWorkoutScreen({ navigation, route }: Props) {
           color={phaseColor}
           size={240}
         />
+        {workout.phase !== 'complete' && (
+          <View style={styles.roundIndicator}>
+            <Text style={styles.roundIndicatorText}>
+              ROUND {workout.phase === 'prep' ? 1 : workout.currentRound} / {workout.totalRounds}
+            </Text>
+            <View style={styles.roundDots}>
+              {Array.from({ length: workout.totalRounds }).map((_, i) => {
+                const roundNum = i + 1;
+                const isDone =
+                  workout.phase === 'prep'
+                    ? false
+                    : workout.phase === 'rest'
+                    ? roundNum < workout.currentRound
+                    : roundNum < workout.currentRound;
+                const isCurrent =
+                  workout.phase === 'prep'
+                    ? roundNum === 1
+                    : roundNum === workout.currentRound;
+                return (
+                  <View
+                    key={i}
+                    style={[
+                      styles.roundDot,
+                      isDone && styles.roundDotDone,
+                      isCurrent && { backgroundColor: phaseColor },
+                    ]}
+                  />
+                );
+              })}
+            </View>
+          </View>
+        )}
       </View>
 
       {/* Combo Display */}
@@ -407,5 +439,29 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 13,
     letterSpacing: 1,
+  },
+  roundIndicator: {
+    alignItems: 'center',
+    marginTop: 12,
+  },
+  roundIndicatorText: {
+    color: COLORS.textMuted,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 2,
+    marginBottom: 8,
+  },
+  roundDots: {
+    flexDirection: 'row',
+    gap: 6,
+  },
+  roundDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: COLORS.surface,
+  },
+  roundDotDone: {
+    backgroundColor: COLORS.textMuted,
   },
 });
