@@ -363,16 +363,16 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   timerBtn: {
+    backgroundColor: COLORS.surface,
+    borderRadius: 14,
+    padding: 12,
     alignItems: 'center',
-    paddingVertical: 10,
     marginBottom: 28,
   },
   timerBtnText: {
-    color: COLORS.textDim,
-    fontSize: 14,
-    fontWeight: '500',
-    textDecorationLine: 'underline',
-    textDecorationColor: COLORS.textDim,
+    color: COLORS.textSecondary,
+    fontSize: 15,
+    fontWeight: '600',
   },
   modalContainer: {
     flex: 1,
