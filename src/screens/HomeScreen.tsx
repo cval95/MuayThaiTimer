@@ -156,7 +156,7 @@ export function HomeScreen() {
 
       {/* Quick Timer */}
       <TouchableOpacity style={styles.timerBtn} onPress={() => setTimerModal(true)}>
-        <Text style={styles.timerBtnText}>⏱ Quick Timer</Text>
+        <Text style={styles.timerBtnText}>Quick Timer</Text>
       </TouchableOpacity>
 
       {/* Quick Timer Modal */}
@@ -306,15 +306,13 @@ const styles = StyleSheet.create({
   newBtn: {
     backgroundColor: COLORS.surface,
     borderRadius: 14,
-    padding: 16,
+    padding: 12,
     alignItems: 'center',
-    marginBottom: 28,
-    borderWidth: 1,
-    borderColor: COLORS.surfaceAlt,
+    marginBottom: 10,
   },
   newBtnText: {
-    color: COLORS.textPrimary,
-    fontSize: 16,
+    color: COLORS.textSecondary,
+    fontSize: 15,
     fontWeight: '600',
   },
   section: { marginBottom: 24 },
@@ -365,18 +363,16 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   timerBtn: {
-    backgroundColor: COLORS.surface,
-    borderRadius: 14,
-    padding: 16,
     alignItems: 'center',
+    paddingVertical: 10,
     marginBottom: 28,
-    borderWidth: 1,
-    borderColor: COLORS.surfaceAlt,
   },
   timerBtnText: {
-    color: COLORS.textSecondary,
-    fontSize: 16,
-    fontWeight: '600',
+    color: COLORS.textDim,
+    fontSize: 14,
+    fontWeight: '500',
+    textDecorationLine: 'underline',
+    textDecorationColor: COLORS.textDim,
   },
   modalContainer: {
     flex: 1,
