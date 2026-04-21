@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
+  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -105,6 +106,17 @@ export default function PaywallScreen({ navigation }: Props) {
         >
           <Text style={styles.catalogBtnText}>📖  Browse Combo Catalog</Text>
         </TouchableOpacity>
+
+        {/* Legal links */}
+        <View style={styles.legalRow}>
+          <TouchableOpacity onPress={() => Linking.openURL('https://cval95.github.io/muaythaitimer-support/privacy')}>
+            <Text style={styles.legalLink}>Privacy Policy</Text>
+          </TouchableOpacity>
+          <Text style={styles.legalSep}>·</Text>
+          <TouchableOpacity onPress={() => Linking.openURL('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/')}>
+            <Text style={styles.legalLink}>Terms of Use</Text>
+          </TouchableOpacity>
+        </View>
 
         {/* Sign out link */}
         <TouchableOpacity style={styles.signOutBtn} onPress={signOut} disabled={loading}>
@@ -211,6 +223,21 @@ const styles = StyleSheet.create({
     color: COLORS.textPrimary,
     fontSize: 15,
     fontWeight: '600',
+  },
+  legalRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: SPACING.lg,
+    gap: SPACING.sm,
+  },
+  legalLink: {
+    color: COLORS.textMuted,
+    fontSize: 12,
+    textDecorationLine: 'underline',
+  },
+  legalSep: {
+    color: COLORS.textMuted,
+    fontSize: 12,
   },
   signOutBtn: { marginTop: SPACING.sm },
   signOutText: {
