@@ -48,3 +48,6 @@ yarn-error.*
 /android
 
 .env
+
+# Supabase CLI
+supabase/.temp

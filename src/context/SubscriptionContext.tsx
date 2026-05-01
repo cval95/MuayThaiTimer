@@ -29,6 +29,7 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
   const [expiresDate, setExpiresDate] = useState<Date | null>(null);
   const [isTrial, setIsTrial] = useState(false);
   const configured = useRef(false);
+  const rcAvailable = useRef(false);
 
   function applyCustomerInfo(info: CustomerInfo) {
     const entitlement = info.entitlements.active[ENTITLEMENT];
@@ -42,14 +43,22 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
     if (configured.current) return;
     configured.current = true;
 
-    const apiKey = Platform.OS === 'ios' ? RC_API_KEY_IOS : RC_API_KEY_ANDROID;
-    if (__DEV__) Purchases.setLogLevel(LOG_LEVEL.DEBUG);
-    Purchases.configure({ apiKey });
+    try {
+      const apiKey = Platform.OS === 'ios' ? RC_API_KEY_IOS : RC_API_KEY_ANDROID;
+      if (__DEV__) Purchases.setLogLevel(LOG_LEVEL.DEBUG);
+      Purchases.configure({ apiKey });
+      rcAvailable.current = true;
+    } catch {
+      // RC not available in Expo Go — fail open
+      setIsSubscribed(__DEV__);
+      setIsLoading(false);
+    }
   }, []);
 
   // When auth state changes, identify/logout RevenueCat user and refresh entitlement
   useEffect(() => {
     const syncUser = async () => {
+      if (!rcAvailable.current) return;
       setIsLoading(true);
       try {
         if (user) {

@@ -17,6 +17,7 @@ interface AuthContextValue {
   signInWithGoogle: () => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: string | null }>;
+  deleteAccount: () => Promise<{ error: string | null }>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -103,13 +104,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await supabase.auth.signOut();
   };
 
+  const deleteAccount = async (): Promise<{ error: string | null }> => {
+    try {
+      const { error } = await supabase.functions.invoke('delete-user');
+      if (error) return { error: error.message };
+      await supabase.auth.signOut();
+      return { error: null };
+    } catch (e: any) {
+      return { error: e.message ?? 'Failed to delete account' };
+    }
+  };
+
   const resetPassword = async (email: string) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email);
     return { error: error?.message ?? null };
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, signInWithEmail, signUpWithEmail, signInWithApple, signInWithGoogle, signOut, resetPassword }}>
+    <AuthContext.Provider value={{ user, session, loading, signInWithEmail, signUpWithEmail, signInWithApple, signInWithGoogle, signOut, resetPassword, deleteAccount }}>
       {children}
     </AuthContext.Provider>
   );
