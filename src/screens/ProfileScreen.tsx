@@ -28,9 +28,10 @@ function daysUntil(date: Date): number {
 }
 
 export default function ProfileScreen({ navigation }: Props) {
-  const { user, signOut, resetPassword } = useAuth();
+  const { user, signOut, resetPassword, deleteAccount } = useAuth();
   const { isSubscribed, expiresDate, isTrial } = useSubscription();
   const [resetLoading, setResetLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const initials = user?.email ? user.email[0].toUpperCase() : '?';
   const isEmailUser = user?.app_metadata?.provider === 'email';
@@ -72,6 +73,43 @@ export default function ProfileScreen({ navigation }: Props) {
       { text: 'Cancel', style: 'cancel' },
       { text: 'Sign Out', style: 'destructive', onPress: signOut },
     ]);
+  };
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Delete Account',
+      'Are you sure you want to permanently delete your account? This will erase all your data and cannot be undone.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete Account',
+          style: 'destructive',
+          onPress: confirmDeleteAccount,
+        },
+      ]
+    );
+  };
+
+  const confirmDeleteAccount = () => {
+    Alert.alert(
+      'Final Confirmation',
+      'This is permanent. Your account and all associated data will be deleted immediately.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Yes, Delete My Account',
+          style: 'destructive',
+          onPress: async () => {
+            setDeleteLoading(true);
+            const { error } = await deleteAccount();
+            setDeleteLoading(false);
+            if (error) {
+              Alert.alert('Error', error);
+            }
+          },
+        },
+      ]
+    );
   };
 
   const subscriptionLabel = () => {
@@ -147,6 +185,19 @@ export default function ProfileScreen({ navigation }: Props) {
         {/* Sign out */}
         <TouchableOpacity style={styles.signOutBtn} onPress={handleSignOut}>
           <Text style={styles.signOutText}>Sign Out</Text>
+        </TouchableOpacity>
+
+        {/* Delete account */}
+        <TouchableOpacity
+          style={styles.deleteBtn}
+          onPress={handleDeleteAccount}
+          disabled={deleteLoading}
+        >
+          {deleteLoading ? (
+            <ActivityIndicator color="#EF4444" size="small" />
+          ) : (
+            <Text style={styles.deleteText}>Delete Account</Text>
+          )}
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -268,5 +319,15 @@ const styles = StyleSheet.create({
     color: '#EF4444',
     fontSize: 15,
     fontWeight: '600',
+  },
+  deleteBtn: {
+    marginTop: SPACING.sm,
+    padding: SPACING.md,
+    alignItems: 'center',
+  },
+  deleteText: {
+    color: COLORS.textMuted,
+    fontSize: 13,
+    textDecorationLine: 'underline',
   },
 });
