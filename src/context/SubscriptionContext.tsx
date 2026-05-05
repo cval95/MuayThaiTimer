@@ -5,6 +5,7 @@ import { useAuth } from './AuthContext';
 
 const RC_API_KEY_IOS = process.env.EXPO_PUBLIC_RC_API_KEY_IOS!;
 const RC_API_KEY_ANDROID = process.env.EXPO_PUBLIC_RC_API_KEY_ANDROID!;
+const BUNDLE_ID = process.env.EXPO_PUBLIC_BUNDLE_ID!;
 const ENTITLEMENT = 'MTApp Pro';
 
 interface SubscriptionContextValue {
@@ -93,7 +94,9 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
   const subscribe = async (): Promise<{ error: string | null }> => {
     try {
       const offerings = await Purchases.getOfferings();
-      const pkg = offerings.current?.annual ?? offerings.current?.availablePackages[0];
+      const pkg = offerings.current?.availablePackages.find(
+        p => p.product.identifier === `${BUNDLE_ID}.annual`
+      );
       if (!pkg) return { error: 'No subscription package available' };
       const { customerInfo } = await Purchases.purchasePackage(pkg);
       applyCustomerInfo(customerInfo);
